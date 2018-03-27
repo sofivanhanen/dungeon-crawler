@@ -1,12 +1,16 @@
 # Dungeon Crawler
 
-### Project for school course (OTM2018)
 
-Because I love **Unity** and **Diablo**.
-*(Todo: Rework README)*
+A Diablo / Fate -style dungeon crawler game, made with Unity, using C#.
 
 
 
-[komentorivi.txt](https://github.com/sofivanhanen/dungeon-crawler/blob/master/laskarit/viikko1/komentorivi.txt)
+Made as part of **OTMK18**.
 
-[gitlog.txt](https://github.com/sofivanhanen/dungeon-crawler/blob/master/laskarit/viikko1/gitlog.txt)
+Links:
+
+[Viikko 1](https://github.com/sofivanhanen/dungeon-crawler/tree/master/laskarit/viikko1) ,
+[Viikko 2](https://github.com/sofivanhanen/dungeon-crawler/tree/master/laskarit/viikko2)
+
+[Dokumentaatio](https://github.com/sofivanhanen/dungeon-crawler/tree/master/dokumentointi) ,
+[Tuntikirjanpito](https://github.com/sofivanhanen/dungeon-crawler/blob/master/dokumentointi/Tuntikirjanpito.md)
