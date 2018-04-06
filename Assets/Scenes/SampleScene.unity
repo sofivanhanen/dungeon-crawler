@@ -266,9 +266,46 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.x
       value: -23.316002
       objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 43443e735f91441dfa2156679c78fd08, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 43443e735f91441dfa2156679c78fd08, type: 3}
   m_IsPrefabParent: 0
+--- !u!1 &1481420388 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100000, guid: 43443e735f91441dfa2156679c78fd08, type: 3}
+  m_PrefabInternal: {fileID: 460208226}
+--- !u!114 &1481420389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1481420388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 271a70a05f4f5437bb6265e093249566, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!95 &1481420392
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1481420388}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: da3e54284ea8c4de5be3d34e5bab8aa4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1526980365
 GameObject:
   m_ObjectHideFlags: 0
@@ -490,6 +527,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c8d1cf03654544998d2ddf3eeaaa46b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sword: {fileID: 1481420388}
 --- !u!4 &2069813223 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 736a5561b5209489db704011c48941f1, type: 3}
