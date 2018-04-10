@@ -23,6 +23,9 @@ public class GhostController : MonoBehaviour
 	private const float minTimeBetweenGettingHit = 0.3f;
 	private float hitTimer;
 
+	private Color normalColor = new Color(1f, 1f, 1f, 0.5f);
+	private Color hurtingColor = new Color(1f, 0.8f, 0.8f, 0.5f);
+
 	void Start ()
 	{
 		player = GameObject.FindWithTag("Player");
@@ -34,7 +37,14 @@ public class GhostController : MonoBehaviour
 	void Update ()
 	{
 		attackTimer += Time.deltaTime;
-		hitTimer += Time.deltaTime;
+		if (hitTimer < minTimeBetweenGettingHit)
+		{
+			hitTimer += Time.deltaTime;
+			if (hitTimer >= minTimeBetweenGettingHit)
+			{
+				this.gameObject.GetComponent<Renderer>().material.color = normalColor;
+			}
+		}
 		var heading = player.transform.position - this.transform.position;
 		// Using sqrMagnitude to save processing power
 		if (heading.sqrMagnitude < maxRange * maxRange) {
@@ -61,5 +71,6 @@ public class GhostController : MonoBehaviour
 		health -= damage;
 		if (health <= 0) Destroy(this.gameObject);
 		hitTimer = 0f;
+		this.gameObject.GetComponent<Renderer>().material.color = hurtingColor;
 	}
 }

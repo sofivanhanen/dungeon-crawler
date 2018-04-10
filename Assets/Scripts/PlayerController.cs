@@ -13,17 +13,30 @@ public class PlayerController : MonoBehaviour {
 	public int health;
 
 	public bool dead;
+	
+	private Color normalColor = new Color(1f, 1f, 1f);
+	private Color hurtingColor = new Color(1f, 0.7f, 0.7f);
+
+	private const float maxTimeShowingHurtingColor = 1f;
+	private float timeSinceHit;
 
 	void Start ()
 	{
 		maxHealth = 100;
 		health = maxHealth;
 		dead = false;
+		timeSinceHit = 0f;
 	}
 	
 	void Update ()
 	{
 		if (dead) return;
+
+		if (timeSinceHit < maxTimeShowingHurtingColor)
+		{
+			timeSinceHit += Time.deltaTime;
+			if (timeSinceHit >= maxTimeShowingHurtingColor) this.gameObject.GetComponent<Renderer>().material.color = normalColor;
+		}
 		
 		// Moving
 		var x = Input.GetAxis("Horizontal");
@@ -46,8 +59,9 @@ public class PlayerController : MonoBehaviour {
 	public void GetHit(int damage)
 	{
 		if (dead) return;
-		// TODO Show a cue that we're hurting
 		health -= damage;
 		if (health <= 0) dead = true;
+		this.gameObject.GetComponent<Renderer>().material.color = hurtingColor;
+		timeSinceHit = 0f;
 	}
 }
