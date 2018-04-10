@@ -30,6 +30,12 @@ public class PlayerController : MonoBehaviour {
 	
 	void Update ()
 	{
+		if (Input.GetKey("escape")) 
+		{
+			// TODO: Make a 'game master' object to control things like this
+			Application.Quit();
+		}
+
 		if (dead) return;
 
 		if (timeSinceHit < maxTimeShowingHurtingColor)

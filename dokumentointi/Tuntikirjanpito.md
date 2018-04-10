@@ -9,8 +9,11 @@
 |5.4.|1.5|Vaatimusten tutkimista / soveltamista Unityyn
 ||1|Player-hahmon luominen ja liikuttaminen
 ||0.5|Kameran ohjaus
-6.4.|1.5|Lattia & siihen liittyvät bugikorjaukset
-||0.5|Miekan luominen
-||2|Miekan heiluttaminen
+|6.4.|1.5|Lattia & siihen liittyvät bugikorjaukset
+||2.5|Miekka! ja sen heiluttaminen
 |7.4.|3|Testien kirjoittamista & debuggaus
-||**14.5**|
+|9.4.|2|Suunnittelua / dokumentaation lukemista / debuggausta
+|10.4.|1.5|Enemy-hahmo
+||1|Collisions / triggers / yms tutkimista
+||2|Taisteleminen
+||**21**|
