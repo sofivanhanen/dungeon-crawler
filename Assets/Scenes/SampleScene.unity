@@ -528,6 +528,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sword: {fileID: 1481420388}
+  maxHealth: 0
+  health: 0
+  dead: 0
 --- !u!4 &2069813223 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 736a5561b5209489db704011c48941f1, type: 3}

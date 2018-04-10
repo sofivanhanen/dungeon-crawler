@@ -9,10 +9,21 @@ public class PlayerController : MonoBehaviour {
 
 	public GameObject sword;
 
-	void Start () {
+	public int maxHealth;
+	public int health;
+
+	public bool dead;
+
+	void Start ()
+	{
+		maxHealth = 100;
+		health = maxHealth;
+		dead = false;
 	}
 	
-	void Update () {
+	void Update ()
+	{
+		if (dead) return;
 		
 		// Moving
 		var x = Input.GetAxis("Horizontal");
@@ -27,9 +38,16 @@ public class PlayerController : MonoBehaviour {
 		// Shooting
 		if (Input.GetMouseButtonDown(0))
 		{
-			Debug.Log("Mouse down.");
 			SwordController swordController = sword.GetComponent<SwordController>();
 			swordController.Attack();
 		}
+	}
+
+	public void GetHit(int damage)
+	{
+		if (dead) return;
+		// TODO Show a cue that we're hurting
+		health -= damage;
+		if (health <= 0) dead = true;
 	}
 }
