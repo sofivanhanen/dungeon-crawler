@@ -1,73 +1,67 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour
+{
+    private const float SpeedOfMovement = 5.0f;
+    private const float SpeedOfTurn = 0.15f;
+    private const float MaxTimeShowingHurtingColor = 1f;
 
-	const float speedOfMovement = 5.0f;
-	const float speedOfTurn = 0.15f;
+    public bool Dead;
+    public int MaxHealth;
+    public int Health;
+    private float _timeSinceHit;
+    private readonly Color _hurtingColor = new Color(1f, 0.7f, 0.7f);
+    private readonly Color _normalColor = new Color(1f, 1f, 1f);
 
-	public GameObject sword;
+    public GameObject Sword;
 
-	public int maxHealth;
-	public int health;
+    private void Start()
+    {
+        MaxHealth = 100;
+        Health = MaxHealth;
+        Dead = false;
+        _timeSinceHit = 0f;
+    }
 
-	public bool dead;
-	
-	private Color normalColor = new Color(1f, 1f, 1f);
-	private Color hurtingColor = new Color(1f, 0.7f, 0.7f);
+    private void Update()
+    {
+        if (Input.GetKey("escape")) Application.Quit();
 
-	private const float maxTimeShowingHurtingColor = 1f;
-	private float timeSinceHit;
+        if (Dead) return;
 
-	void Start ()
-	{
-		maxHealth = 100;
-		health = maxHealth;
-		dead = false;
-		timeSinceHit = 0f;
-	}
-	
-	void Update ()
-	{
-		if (Input.GetKey("escape")) 
-		{
-			// TODO: Make a 'game master' object to control things like this
-			Application.Quit();
-		}
+        if (_timeSinceHit < MaxTimeShowingHurtingColor)
+        {
+            _timeSinceHit += Time.deltaTime;
+            if (_timeSinceHit >= MaxTimeShowingHurtingColor)
+                gameObject.GetComponent<Renderer>().material.color = _normalColor;
+        }
 
-		if (dead) return;
-
-		if (timeSinceHit < maxTimeShowingHurtingColor)
-		{
-			timeSinceHit += Time.deltaTime;
-			if (timeSinceHit >= maxTimeShowingHurtingColor) this.gameObject.GetComponent<Renderer>().material.color = normalColor;
-		}
-		
-		// Moving
-		var x = Input.GetAxis("Horizontal");
+        // Moving
+        var x = Input.GetAxis("Horizontal");
         var z = Input.GetAxis("Vertical");
-		if (!(x==0 && z==0)) {
-		Vector3 movement = new Vector3(x, 0, z);
-		// TODO: Why does rotation work wrong? Player always faces opposite direction. '*-1* fixes it.
-		transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement*-1), speedOfTurn);
-        transform.Translate(movement * Time.deltaTime * speedOfMovement, Space.World);
-		}
-		
-		// Shooting
-		if (Input.GetMouseButtonDown(0))
-		{
-			SwordController swordController = sword.GetComponent<SwordController>();
-			swordController.Attack();
-		}
-	}
+        if (!(x.Equals(0f) && z.Equals(0f)))
+        {
+            var movement = new Vector3(x, 0, z);
+            // TODO: Why does rotation work wrong? Player always faces opposite direction. '*-1* fixes it.
+            transform.rotation =
+                Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement * -1), SpeedOfTurn);
+            transform.Translate(movement * Time.deltaTime * SpeedOfMovement, Space.World);
+        }
 
-	public void GetHit(int damage)
-	{
-		if (dead) return;
-		health -= damage;
-		if (health <= 0) dead = true;
-		this.gameObject.GetComponent<Renderer>().material.color = hurtingColor;
-		timeSinceHit = 0f;
-	}
+        // Shooting
+        if (Input.GetMouseButtonDown(0))
+        {
+            var swordController = Sword.GetComponent<SwordController>();
+            swordController.Attack();
+        }
+    }
+
+    public void GetHit(int damage)
+    {
+        if (Dead) return;
+        Health -= damage;
+        if (Health <= 0) Dead = true;
+        gameObject.GetComponent<Renderer>().material.color = _hurtingColor;
+        _timeSinceHit = 0f;
+    }
 }

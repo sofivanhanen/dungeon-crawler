@@ -191,7 +191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 573fdb1084bef44f6adc7fcd4f2d7544, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 2069813219}
+  Player: {fileID: 0}
 --- !u!20 &282840813
 Camera:
   m_ObjectHideFlags: 0
@@ -581,10 +581,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c8d1cf03654544998d2ddf3eeaaa46b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sword: {fileID: 1481420388}
-  maxHealth: 0
-  health: 0
-  dead: 0
+  Dead: 0
+  MaxHealth: 0
+  Health: 0
+  Sword: {fileID: 1481420388}
 --- !u!4 &2069813223 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 736a5561b5209489db704011c48941f1, type: 3}

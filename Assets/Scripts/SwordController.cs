@@ -1,30 +1,25 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SwordController : MonoBehaviour
 {
+    private const int Damage = 20;
 
-	private Animator animator;
+    private Animator _animator;
 
-	private const int damage = 20;
+    private void Start()
+    {
+        _animator = GetComponent<Animator>();
+    }
 
-	void Start () {
-		animator = GetComponent<Animator>();
-	}
+    public void Attack()
+    {
+        _animator.SetTrigger("Sword_attack");
+    }
 
-	public void Attack() {
-		animator.SetTrigger("Sword_attack");
-	}
-
-	void OnTriggerEnter(Collider collider)
-	{
-		// Possible because of multiple contact points, OnTriggerEnter gets called repeatedly. Handle this in GetHit.
-		if (collider.gameObject.tag == "Enemy" && animator.GetCurrentAnimatorStateInfo(0).IsName("Sword_swing"))
-		{
-			// TODO What if it's another enemy, not a ghost?
-			collider.gameObject.GetComponent<GhostController>().GetHit(damage);
-		}
-	}
-	
+    private void OnTriggerEnter(Collider colliderOfSecondObject)
+    {
+        // Possible because of multiple contact points, OnTriggerEnter gets called repeatedly. Handle this in GetHit.
+        if (colliderOfSecondObject.gameObject.CompareTag("Enemy") && _animator.GetCurrentAnimatorStateInfo(0).IsName("Sword_swing"))
+            colliderOfSecondObject.gameObject.GetComponent<GhostController>().GetHit(Damage);
+    }
 }
