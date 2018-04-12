@@ -16,4 +16,7 @@
 |10.4.|1.5|Enemy-hahmo
 ||1|Collisions / triggers / yms tutkimista
 ||2|Taisteleminen
-||**21**|
+|11.4.|1|Koodin laadun parantaminen
+|12.4.|2|Testaamisen suunnittelua
+||1.5|Unityn arkkitehtuuriin tutustumista / luokkakaavio
+||**25.5**|

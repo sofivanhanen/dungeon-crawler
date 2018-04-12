@@ -3,7 +3,7 @@
 
 A Diablo / Fate -style dungeon crawler game, made with Unity, using C#. Made as part of **OTMK18**.
 
-Builds in the Builds-public folder. Pressing escape exits the game.
+Builds in the Builds-public folder. Move with arrow keys or WASD, click to attack. Pressing escape exits the game.
 
 I use ReSharper for code analysis.
 
