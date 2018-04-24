@@ -19,4 +19,9 @@
 |11.4.|1|Koodin laadun parantaminen
 |12.4.|2|Testaamisen suunnittelua
 ||1.5|Unityn arkkitehtuuriin tutustumista / luokkakaavio
-||**25.5**|
+|20.4.|4|Testattavuuden parantamista (eli refaktorointia) ja testien kirjoittamista
+|24.4.|5|Testattavuuden parantamista ja testien kirjoittamista
+||2|Huoneiden luominen
+||3|Tasojen generointi
+||2|Dokumentaatio / sekvenssikaavio / buildit / release
+||**41.5**|
