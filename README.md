@@ -5,6 +5,11 @@ A Diablo / Fate -style dungeon crawler game, made with Unity, using C#. Made as 
 
 Builds in the Builds-public folder. Move with arrow keys or WASD, click to attack. Pressing escape exits the game.
 
+## Releases
+
+First pre-release is here! Check it out:
+[v0.9](https://github.com/sofivanhanen/dungeon-crawler/releases/tag/v0.9)
+
 ## Testing
 
 Unit tests are located in the Assets/Editor folder. In order to run them, open the project in Unity, open the Test Runner (Window - Test Runner) and select EditMode.
