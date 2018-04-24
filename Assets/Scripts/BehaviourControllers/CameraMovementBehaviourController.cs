@@ -9,7 +9,7 @@ namespace BehaviourControllers
         public Vector3 Offset;
         public float Interpolation;
 
-        public Vector3 CalculateDirection(Vector3 currentPosition, Vector3 objectToFollowPosition, float deltaTime)
+        public Vector3 CalculatePosition(Vector3 currentPosition, Vector3 objectToFollowPosition, float deltaTime)
         {
             var newPosition = new Vector3();
             newPosition.x = Mathf.Lerp(currentPosition.x, objectToFollowPosition.x + Offset.x,

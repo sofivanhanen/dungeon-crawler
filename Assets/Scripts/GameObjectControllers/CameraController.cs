@@ -4,6 +4,7 @@ using BehaviourControllers;
 namespace GameObjectControllers
 {
     // Our main camera controller
+    // Tested in CameraBehaviourTest
     public class CameraController : MonoBehaviour
     {
         public GameObject Player;
@@ -20,7 +21,7 @@ namespace GameObjectControllers
         {
             // Moving in LateUpdate so the object we're following has already moved
             transform.position =
-                _movement.CalculateDirection(transform.position, Player.transform.position, Time.deltaTime);
+                _movement.CalculatePosition(transform.position, Player.transform.position, Time.deltaTime);
         }
     }
 }
