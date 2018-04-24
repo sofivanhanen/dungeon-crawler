@@ -1,67 +1,64 @@
-﻿using UnityEngine;
+﻿using BehaviourControllers;
+using Interfaces;
+using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+namespace GameObjectControllers
 {
-    private const float SpeedOfMovement = 5.0f;
-    private const float SpeedOfTurn = 0.15f;
-    private const float MaxTimeShowingHurtingColor = 1f;
-
-    public bool Dead;
-    public int MaxHealth;
-    public int Health;
-    private float _timeSinceHit;
-    private readonly Color _hurtingColor = new Color(1f, 0.7f, 0.7f);
-    private readonly Color _normalColor = new Color(1f, 1f, 1f);
-
-    public GameObject Sword;
-
-    private void Start()
+    public class PlayerController : MonoBehaviour, IObjectWithHealth
     {
-        MaxHealth = 100;
-        Health = MaxHealth;
-        Dead = false;
-        _timeSinceHit = 0f;
-    }
+        private const float SpeedOfMovement = 5.0f;
+        private const float SpeedOfTurn = 0.15f;
 
-    private void Update()
-    {
-        if (Input.GetKey("escape")) Application.Quit();
+        private HealthAndDyingBehaviourController _healthAndDying;
 
-        if (Dead) return;
+        public GameObject Sword;
 
-        if (_timeSinceHit < MaxTimeShowingHurtingColor)
+        private void Start()
         {
-            _timeSinceHit += Time.deltaTime;
-            if (_timeSinceHit >= MaxTimeShowingHurtingColor)
-                gameObject.GetComponent<Renderer>().material.color = _normalColor;
+            _healthAndDying =
+                new HealthAndDyingBehaviourController(this, new Color(1f, 1f, 1f), new Color(1f, 0.7f, 0.7f), 100, 1f);
         }
 
-        // Moving
-        var x = Input.GetAxis("Horizontal");
-        var z = Input.GetAxis("Vertical");
-        if (!(x.Equals(0f) && z.Equals(0f)))
+        private void Update()
         {
-            var movement = new Vector3(x, 0, z);
-            // TODO: Why does rotation work wrong? Player always faces opposite direction. '*-1* fixes it.
-            transform.rotation =
-                Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement * -1), SpeedOfTurn);
-            transform.Translate(movement * Time.deltaTime * SpeedOfMovement, Space.World);
+            if (Input.GetKey("escape")) Application.Quit();
+            _healthAndDying.Update(Time.deltaTime);
+            if (_healthAndDying.Dead) return;
+
+            // Moving
+            var x = Input.GetAxis("Horizontal");
+            var z = Input.GetAxis("Vertical");
+            if (!(x.Equals(0f) && z.Equals(0f)))
+            {
+                var movement = new Vector3(x, 0, z);
+                // TODO: Why does rotation work wrong? Player always faces opposite direction. '*-1* fixes it.
+                transform.rotation =
+                    Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement * -1), SpeedOfTurn);
+                transform.Translate(movement * Time.deltaTime * SpeedOfMovement, Space.World);
+            }
+
+            // Shooting
+            if (Input.GetMouseButtonDown(0))
+            {
+                var swordController = Sword.GetComponent<SwordController>();
+                swordController.Attack();
+            }
         }
 
-        // Shooting
-        if (Input.GetMouseButtonDown(0))
+        public void GetHit(int damage)
         {
-            var swordController = Sword.GetComponent<SwordController>();
-            swordController.Attack();
+            _healthAndDying.GetHit(damage, false);
         }
-    }
 
-    public void GetHit(int damage)
-    {
-        if (Dead) return;
-        Health -= damage;
-        if (Health <= 0) Dead = true;
-        gameObject.GetComponent<Renderer>().material.color = _hurtingColor;
-        _timeSinceHit = 0f;
+        public void ChangeColor(Color newColor)
+        {
+            gameObject.GetComponent<Renderer>().material.color = newColor;
+        }
+
+        public void Die()
+        {
+            // TODO: How should the player die / what happens?
+            ChangeColor(new Color(1f, 0.3f, 0.3f));
+        }
     }
 }
