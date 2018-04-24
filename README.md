@@ -19,4 +19,4 @@ I use ReSharper for code analysis. In order to run the analysis, open the projec
 
 [Tuntikirjanpito (Time tracking)](https://github.com/sofivanhanen/dungeon-crawler/blob/master/dokumentointi/Tuntikirjanpito.md)
 
-[Arkkitehtuuri (Architecture / 'class diagram')](https://github.com/sofivanhanen/dungeon-crawler/blob/master/dokumentointi/Arkkitehtuuri.md)
+[Arkkitehtuuri (Architecture / diagrams)](https://github.com/sofivanhanen/dungeon-crawler/blob/master/dokumentointi/Arkkitehtuuri.md)
