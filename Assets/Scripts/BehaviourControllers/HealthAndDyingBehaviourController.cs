@@ -39,7 +39,7 @@ namespace BehaviourControllers
             // TODO: This timer might end up being redundant
             if (useTimer)
             {
-                if (_timeSinceLastHit <= DamageTakingTimerMax)
+                if (_timeSinceLastHit < DamageTakingTimerMax)
                 {
                     return false;
                 }
@@ -63,7 +63,7 @@ namespace BehaviourControllers
         {
             if (Dead) return;
             _timeSinceLastHit += deltaTime;
-            if (_timeSinceLastHit > DamageTakingTimerMax && _timeSinceLastHit - deltaTime < DamageTakingTimerMax)
+            if (_timeSinceLastHit >= DamageTakingTimerMax && _timeSinceLastHit - deltaTime < DamageTakingTimerMax)
             {
                 // Changing from hurting to normal
                 ObjectWithHealth.ChangeColor(NormalColor);
