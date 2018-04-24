@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using GameObjectControllers;
 
 public class SwordController : MonoBehaviour
 {

@@ -1,69 +1,73 @@
-﻿using UnityEngine;
-using GameObjectControllers;
+﻿using BehaviourControllers;
+using Interfaces;
+using UnityEngine;
 
-public class GhostController : MonoBehaviour
+namespace GameObjectControllers
 {
-    private const int MaxRange = 5;
-    private const float SpeedOfMovement = 1.0f;
-    private const float SpeedOfTurn = 0.15f;
-    private const float MinTimeBetweenAttacks = 1f;
-    private const int Damage = 30;
-    private const int MaxHealth = 40;
-    private const float MinTimeBetweenGettingHit = 0.3f;
-    
-    private float _attackTimer;
-    private int _health;
-    private float _hitTimer;
-    private readonly Color _hurtingColor = new Color(1f, 0.8f, 0.8f, 0.5f);
-    private readonly Color _normalColor = new Color(1f, 1f, 1f, 0.5f);
-
-    public GameObject Player;
-
-    private void Start()
+    public class GhostController : MonoBehaviour, IObjectWithHealth
     {
-        Player = GameObject.FindWithTag("Player");
-        _attackTimer = MinTimeBetweenAttacks;
-        _health = MaxHealth;
-        _hitTimer = MinTimeBetweenAttacks;
-    }
+        private const int MaxRange = 5;
+        private const float SpeedOfMovement = 1.0f;
+        private const float SpeedOfTurn = 0.15f;
+        private const float MinTimeBetweenAttacks = 1f;
+        private float _attackTimer;
+        private const int Damage = 30;
 
-    private void Update()
-    {
-        _attackTimer += Time.deltaTime;
-        if (_hitTimer < MinTimeBetweenGettingHit)
+        private HealthAndDyingBehaviourController _healthAndDying;
+
+        public GameObject Player;
+
+        private void Start()
         {
-            _hitTimer += Time.deltaTime;
-            if (_hitTimer >= MinTimeBetweenGettingHit) gameObject.GetComponent<Renderer>().material.color = _normalColor;
+            _healthAndDying = new HealthAndDyingBehaviourController(this, new Color(1f, 1f, 1f, 0.5f),
+                new Color(1f, 0.8f, 0.8f, 0.5f), 40, 0.3f);
+            Player = GameObject.FindWithTag("Player");
+            _attackTimer = MinTimeBetweenAttacks;
         }
 
-        var heading = Player.transform.position - transform.position;
-        // Using sqrMagnitude to save processing power
-        if (heading.sqrMagnitude < MaxRange * MaxRange)
+        private void Update()
         {
-            // Player is within range! Let's get 'em!!
-            var distance = heading.magnitude;
-            var movement = heading / distance;
-            transform.rotation =
-                Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement * -1), SpeedOfTurn);
-            transform.Translate(movement * Time.deltaTime * SpeedOfMovement, Space.World);
-        }
-    }
+            _attackTimer += Time.deltaTime;
+            _healthAndDying.Update(Time.deltaTime);
+            // No check for death here as if we died, we should be destroyed by now
 
-    private void OnCollisionStay(Collision collision)
-    {
-        if (collision.gameObject.tag == "Player" && _attackTimer >= MinTimeBetweenAttacks)
+            // TODO: Movement controller for ghost
+            var heading = Player.transform.position - transform.position;
+            // Using sqrMagnitude to save processing power
+            if (heading.sqrMagnitude < MaxRange * MaxRange)
+            {
+                // Player is within range! Let's get 'em!!
+                var distance = heading.magnitude;
+                var movement = heading / distance;
+                transform.rotation =
+                    Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement * -1), SpeedOfTurn);
+                transform.Translate(movement * Time.deltaTime * SpeedOfMovement, Space.World);
+            }
+        }
+
+        private void OnCollisionStay(Collision collision)
         {
-            Player.GetComponent<PlayerController>().GetHit(Damage);
-            _attackTimer = 0;
+            // TODO: Attack controller for ghost
+            if (collision.gameObject.CompareTag("Player") && _attackTimer >= MinTimeBetweenAttacks)
+            {
+                Player.GetComponent<PlayerController>().GetHit(Damage);
+                _attackTimer = 0;
+            }
         }
-    }
 
-    public void GetHit(int damage)
-    {
-        if (_hitTimer < MinTimeBetweenGettingHit) return;
-        _health -= damage;
-        if (_health <= 0) Destroy(gameObject);
-        _hitTimer = 0f;
-        gameObject.GetComponent<Renderer>().material.color = _hurtingColor;
+        public void GetHit(int damage)
+        {
+            _healthAndDying.GetHit(damage, true);
+        }
+
+        public void ChangeColor(Color newColor)
+        {
+            gameObject.GetComponent<Renderer>().material.color = newColor;
+        }
+
+        public void Die()
+        {
+            Destroy(gameObject);
+        }
     }
 }
