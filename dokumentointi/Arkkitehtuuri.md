@@ -11,11 +11,11 @@ Lisäys 24.4. Testattavuuden vuoksi minun piti muuttaa lähestymistapaani: Nykyi
 Nyt ne siis vastaavatkin perinteisiä olio-ohjelmoinnin luokkia.
 Päivitän tämän kaavion kuvaamaan myös tasogeneraatiota pian.
 
-![Luokkaaavio](class diagram.png)
+![Luokkaaavio](class_diagram.png)
 
 ## Sekvenssikaavio
 
 Kaavio kuvaa tasojen satunnaisgenerointia.
 GameMasterController on MonoDevelop-scripti, eli se hoitaa työn UI-puolen, ja LevelGenerator on vastuussa koko logiikasta.
 
-![Sekvenssikaavio](Generating a Level.png)
+![Sekvenssikaavio](sequence_diagram.png)
