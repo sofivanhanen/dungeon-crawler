@@ -5,7 +5,13 @@ A Diablo / Fate -style dungeon crawler game, made with Unity, using C#. Made as 
 
 Builds in the Builds-public folder. Move with arrow keys or WASD, click to attack. Pressing escape exits the game.
 
-I use ReSharper for code analysis.
+## Testing
+
+Unit tests are located in the Assets/Editor folder. In order to run them, open the project in Unity, open the Test Runner (Window - Test Runner) and select EditMode.
+
+## Code analysis
+
+I use ReSharper for code analysis. In order to run the analysis, open the project in Unity, select Assets - Open C# Project, open the generated .sln file with an IDE with ReSharper (I use JetBrains Rider), and run code analysis (In Rider, Code - Inspect code). My ReSharper settings are still default.
 
 ## Documentation
 
