@@ -20,14 +20,14 @@ namespace GameObjectControllers
 
         private void Start()
         {
-            _levelGenerator = new LevelGenerator(EdgeLength);
+            _levelGenerator = new LevelGenerator();
             // TODO: Generating a level takes a while; add a loading screen
             GenerateLevel();
         }
 
         public void GenerateLevel()
         {
-            Room[,] level = _levelGenerator.GenerateLevel();
+            Room[,] level = _levelGenerator.GenerateLevel(EdgeLength);
             for (int x = 0; x < EdgeLength; x++)
             {
                 for (int z = 0; z < EdgeLength; z++)

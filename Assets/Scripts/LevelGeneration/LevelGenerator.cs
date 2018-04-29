@@ -6,44 +6,43 @@ namespace LevelGeneration
 {
     public class LevelGenerator
     {
-        public static int South = 0;
-        public static int West = 1;
-        public static int North = 2;
-        public static int East = 3;
+        private const int South = 0;
+        private const int West = 1;
+        private const int North = 2;
+        private const int East = 3;
 
-        public static int Dead = 10;
-        public static int Corridor = 11;
-        public static int Corner = 12;
-        public static int ThreeWay = 13;
-        public static int FourWay = 14;
+        private const int Dead = 10;
+        private const int Corridor = 11;
+        private const int Corner = 12;
+        private const int ThreeWay = 13;
+        private const int FourWay = 14;
 
         private int _edgeSize;
         private Room[,] _level;
-        private Random random;
+        private readonly Random _random;
 
-        public LevelGenerator(int edgeSize)
+        public LevelGenerator()
         {
+            _random = new Random();
+        }
+
+        public Room[,] GenerateLevel(int edgeSize)
+        {
+            // Setup
             if (edgeSize < 3)
             {
                 throw new Exception("Cannot generate level smaller than 3x3");
             }
 
             _edgeSize = edgeSize;
-            random = new Random();
-        }
-
-        public Room[,] GenerateLevel()
-        {
-            // Setup
             _level = new Room[_edgeSize, _edgeSize];
-
+            
             // Choose starting place
-            int x = random.Next(1, _edgeSize - 1);
-            int z = random.Next(1, _edgeSize - 1);
-            _level[x, z] = new FourWayRoom(x, z, 0);
-            _level[x, z].Beginning = true; // TODO: 'Beginning' doesn't yet do anything
+            int x = _random.Next(1, _edgeSize - 1);
+            int z = _random.Next(1, _edgeSize - 1);
+            _level[x, z] = new FourWayRoom(x, z, 0) {Beginning = true};
 
-            // Starting the iterative generation
+            // Starting the recursive generation
             ContinueFrom(_level[x, z]);
 
             // Generation finished, return room
@@ -53,28 +52,32 @@ namespace LevelGeneration
 
         private void ContinueFrom(Room room)
         {
-            // TODO: Randomize the direction we start in
             int x = room.X;
             int z = room.Z;
-            // TODO: Copy-paste here too
-            if (room.HasDoorwayTo(South) && _level[x, z - 1] == null)
+            int direction = _random.Next(0, 4);
+            for (int i = 0; i < 4; i++)
             {
-                Generate(x, z - 1, North);
-            }
-
-            if (room.HasDoorwayTo(West) && _level[x - 1, z] == null)
-            {
-                Generate(x - 1, z, East);
-            }
-
-            if (room.HasDoorwayTo(North) && _level[x, z + 1] == null)
-            {
-                Generate(x, z + 1, South);
-            }
-
-            if (room.HasDoorwayTo(East) && _level[x + 1, z] == null)
-            {
-                Generate(x + 1, z, West);
+                if (room.HasDoorwayTo(direction % 4) && GetRoomInDirection(room, direction % 4) == null)
+                {
+                    // Generating a room
+                    switch (direction % 4)
+                    {
+                        case South:
+                            Generate(x, z - 1, North);
+                            break;
+                        case West:
+                            Generate(x - 1, z, East);
+                            break;
+                        case North:
+                            Generate(x, z + 1, South);
+                            break;
+                        case East:
+                            Generate(x + 1, z, West);
+                            break;
+                    }
+                }
+                
+                direction++;
             }
         }
 
@@ -85,9 +88,9 @@ namespace LevelGeneration
             Room room;
             while (true)
             {
-                shape = random.Next(Dead, FourWay + 1);
+                shape = _random.Next(Dead, FourWay + 1);
                 // Testing with every orientation
-                orientation = random.Next(0, 4);
+                orientation = _random.Next(0, 4);
                 for (int i = 0; i < 4; i++)
                 {
                     room = GenerateRoom(x, z, orientation % 4, shape);
@@ -108,127 +111,69 @@ namespace LevelGeneration
             }
         }
 
-        private Room GenerateRoom(int x, int z, int orientation, int shape)
+        private static Room GenerateRoom(int x, int z, int orientation, int shape)
         {
-            if (shape == Dead)
+            switch (shape)
             {
-                return new DeadEndRoom(x, z, orientation);
+                case Dead:
+                    return new DeadEndRoom(x, z, orientation);
+                case Corridor:
+                    return new CorridorRoom(x, z, orientation);
+                case Corner:
+                    return new CornerRoom(x, z, orientation);
+                case ThreeWay:
+                    return new ThreeWayRoom(x, z, orientation);
+                case FourWay:
+                    return new FourWayRoom(x, z, orientation);
+                default:
+                    throw new Exception("Trying to add a room not yet implemented");
             }
-            else if (shape == Corridor)
-            {
-                return new CorridorRoom(x, z, orientation);
-            }
-            else if (shape == Corner)
-            {
-                return new CornerRoom(x, z, orientation);
-            }
-            else if (shape == ThreeWay)
-            {
-                return new ThreeWayRoom(x, z, orientation);
-            }
-            else if (shape == FourWay)
-            {
-                return new FourWayRoom(x, z, orientation);
-            }
-
-            throw new Exception("Trying to add a room not yet implemented");
         }
 
         private bool IsValid(Room room, int comingFrom)
         {
-            // TODO: Fix this horrible copy-paste
-            // TODO: We also need to check that we're not blocking a way not yet generated. It's not game breaking, but not optimal either.
-            
-            // Checking from south
-            if (comingFrom == South)
+            // Checking every direction
+            for (int direction = 0; direction < 4; direction++)
             {
-                if (!room.HasDoorwayTo(South)) return false;
-            }
-            else
-            {
-                if (room.HasDoorwayTo(South))
+                if (comingFrom == direction)
                 {
-                    try
-                    {
-                        if (_level[room.X, room.Z - 1] != null)
-                        {
-                            // Room has doorway to here, but the path is already taken
-                            return false;
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        // Reached end of legal area
-                        return false;
-                    }
+                    if (!room.HasDoorwayTo(direction)) return false;
                 }
-            }
-
-            // Checking from west
-            if (comingFrom == West)
-            {
-                if (!room.HasDoorwayTo(West)) return false;
-            }
-            else
-            {
-                if (room.HasDoorwayTo(West))
+                else
                 {
-                    try
+                    if (room.HasDoorwayTo(direction))
                     {
-                        if (_level[room.X - 1, room.Z] != null)
+                        try
                         {
+                            if (GetRoomInDirection(room, direction) != null)
+                            {
+                                // Room has doorway to here, but the path is already taken
+                                // If the blocking door also has a nicely fitting doorway (to the opposite direction so they meet), this is a match
+                                if (!GetRoomInDirection(room, direction).HasDoorwayTo((direction + 2) % 4)) return false;
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            // Reached end of legal area, though there should be space here
                             return false;
                         }
                     }
-                    catch (Exception e)
+                    else
                     {
-                        return false;
-                    }
-                }
-            }
-
-            // Checking from north
-            if (comingFrom == North)
-            {
-                if (!room.HasDoorwayTo(North)) return false;
-            }
-            else
-            {
-                if (room.HasDoorwayTo(North))
-                {
-                    try
-                    {
-                        if (_level[room.X, room.Z + 1] != null)
+                        // Room does not have a doorway to specific direction: Now we have to check that the neighbouring room is not trying to access this room
+                        try
                         {
-                            return false;
+                            if (GetRoomInDirection(room, direction) != null)
+                            {
+                                // There is a room here
+                                // If the other room has a doorway to where we're generating, this is not a match
+                                if (GetRoomInDirection(room, direction).HasDoorwayTo((direction + 2) % 4)) return false;
+                            }
                         }
-                    }
-                    catch (Exception e)
-                    {
-                        return false;
-                    }
-                }
-            }
-
-            // Checking from east
-            if (comingFrom == East)
-            {
-                if (!room.HasDoorwayTo(East)) return false;
-            }
-            else
-            {
-                if (room.HasDoorwayTo(East))
-                {
-                    try
-                    {
-                        if (_level[room.X + 1, room.Z] != null)
+                        catch (Exception)
                         {
-                            return false;
+                            // Reached end of legal area
                         }
-                    }
-                    catch (Exception e)
-                    {
-                        return false;
                     }
                 }
             }
@@ -237,9 +182,22 @@ namespace LevelGeneration
             return true;
         }
 
-        public void ModifySize(int newEdgeSize)
+        private Room GetRoomInDirection(Room room, int direction)
         {
-            _edgeSize = newEdgeSize;
+            switch (direction)
+            {
+                case South:
+                    return _level[room.X, room.Z - 1];
+                case North:
+                    return _level[room.X, room.Z + 1];
+                case West:
+                    return _level[room.X - 1, room.Z];
+                case East:
+                    return _level[room.X + 1, room.Z];
+                default:
+                    // Direction not correct?
+                    throw new Exception("Couldn't find room in direction" + direction);
+            }
         }
     }
 }
