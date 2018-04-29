@@ -9,6 +9,8 @@ namespace LevelGeneration.Rooms
         public readonly int Orientation;
 
         public bool Beginning;
+        public bool HideSouthernWall;
+        public bool HideWesternWall;
 
         // All rooms need to know their location, orientation and shape.
         // Rooms also keep track of the enemies, loot, and specialities (i.e. staircases).
@@ -18,6 +20,8 @@ namespace LevelGeneration.Rooms
             Z = z;
             Orientation = orientation;
             Beginning = false;
+            HideSouthernWall = false;
+            HideWesternWall = false;
         }
 
         public virtual bool HasDoorwayTo(int direction)

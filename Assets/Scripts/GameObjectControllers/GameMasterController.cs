@@ -38,31 +38,68 @@ namespace GameObjectControllers
                     position.x = ((0 - EdgeLength / 2) + room.X) * 10;
                     position.z = ((0 - EdgeLength / 2) + room.Z) * 10;
                     Quaternion rotation = Quaternion.Euler(0, 90 * room.Orientation, 0);
-                    // TODO: Fix the stuttering that happens with overlapping walls
-                    if (room.GetType().Name == "FourWayRoom")
+                    GameObject builtRoom;
+                    switch (room.GetType().Name)
                     {
-                        Instantiate(FourWayRoom, position, rotation);
+                        case "FourWayRoom":
+                            builtRoom = Instantiate(FourWayRoom, position, rotation);
+                            break;
+                        case "CorridorRoom":
+                            builtRoom = Instantiate(CorridorRoom, position, rotation);
+                            break;
+                        case "CornerRoom":
+                            builtRoom = Instantiate(CornerRoom, position, rotation);
+                            break;
+                        case "ThreeWayRoom":
+                            builtRoom = Instantiate(ThreeWayRoom, position, rotation);
+                            break;
+                        case "DeadEndRoom":
+                            builtRoom = Instantiate(DeadEndRoom, position, rotation);
+                            break;
+                        default:
+                            throw new Exception("Trying to add a room not yet implemented. Room name was: " +
+                                                room.GetType().Name);
                     }
-                    else if (room.GetType().Name == "CorridorRoom")
+
+                    // Overlapping walls cause a glitch so we disable all overlapping walls
+                    // What makes this ugly is that because we're rotating the rooms, we have to check which walls are the new southern and western walls
+                    // TODO: Make prettier?
+                    if (room.HideSouthernWall)
                     {
-                        Instantiate(CorridorRoom, position, rotation);
+                        switch (room.Orientation)
+                        {
+                            case 0:
+                                builtRoom.transform.Find("Wall_south").gameObject.SetActive(false);
+                                break;
+                            case 1:
+                                builtRoom.transform.Find("Wall_east").gameObject.SetActive(false);
+                                break;
+                            case 2:
+                                builtRoom.transform.Find("Wall_north").gameObject.SetActive(false);
+                                break;
+                            case 3:
+                                builtRoom.transform.Find("Wall_west").gameObject.SetActive(false);
+                                break;
+                        }
                     }
-                    else if (room.GetType().Name == "CornerRoom")
+
+                    if (room.HideWesternWall)
                     {
-                        Instantiate(CornerRoom, position, rotation);
-                    }
-                    else if (room.GetType().Name == "ThreeWayRoom")
-                    {
-                        Instantiate(ThreeWayRoom, position, rotation);
-                    }
-                    else if (room.GetType().Name == "DeadEndRoom")
-                    {
-                        Instantiate(DeadEndRoom, position, rotation);
-                    }
-                    else
-                    {
-                        throw new Exception("Trying to add a room not yet implemented. Room name was: " +
-                                            room.GetType().Name);
+                        switch (room.Orientation)
+                        {
+                            case 0:
+                                builtRoom.transform.Find("Wall_west").gameObject.SetActive(false);
+                                break;
+                            case 1:
+                                builtRoom.transform.Find("Wall_south").gameObject.SetActive(false);
+                                break;
+                            case 2:
+                                builtRoom.transform.Find("Wall_east").gameObject.SetActive(false);
+                                break;
+                            case 3:
+                                builtRoom.transform.Find("Wall_north").gameObject.SetActive(false);
+                                break;
+                        }
                     }
 
                     // Place the player in the start of dungeon

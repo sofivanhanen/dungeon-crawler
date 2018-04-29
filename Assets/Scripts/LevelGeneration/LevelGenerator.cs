@@ -36,7 +36,7 @@ namespace LevelGeneration
 
             _edgeSize = edgeSize;
             _level = new Room[_edgeSize, _edgeSize];
-            
+
             // Choose starting place
             int x = _random.Next(1, _edgeSize - 1);
             int z = _random.Next(1, _edgeSize - 1);
@@ -76,7 +76,7 @@ namespace LevelGeneration
                             break;
                     }
                 }
-                
+
                 direction++;
             }
         }
@@ -96,7 +96,7 @@ namespace LevelGeneration
                     room = GenerateRoom(x, z, orientation % 4, shape);
                     if (IsValid(room, comingFrom))
                     {
-                        // Found a nicely fitting room. Moving on.
+                        // Generation of room finished.
                         goto finish;
                     }
 
@@ -107,6 +107,29 @@ namespace LevelGeneration
             finish:
             {
                 _level[x, z] = room;
+                // Here we disable overlapping walls to avoid glitches
+                for (int direction = 0; direction < 4; direction++)
+                {
+                    if (GetRoomInDirection(room, direction) != null)
+                    {
+                        switch (direction)
+                        {
+                            case South:
+                                room.HideSouthernWall = true;
+                                break;
+                            case West:
+                                room.HideWesternWall = true;
+                                break;
+                            case North:
+                                GetRoomInDirection(room, direction).HideSouthernWall = true;
+                                break;
+                            case East:
+                                GetRoomInDirection(room, direction).HideWesternWall = true;
+                                break;
+                        }
+                    }
+                }
+
                 ContinueFrom(room);
             }
         }
@@ -143,36 +166,29 @@ namespace LevelGeneration
                 {
                     if (room.HasDoorwayTo(direction))
                     {
-                        try
+                        // Room has doorway to here
+                        if (!DirectionIsLegal(room, direction))
                         {
-                            if (GetRoomInDirection(room, direction) != null)
-                            {
-                                // Room has doorway to here, but the path is already taken
-                                // If the blocking door also has a nicely fitting doorway (to the opposite direction so they meet), this is a match
-                                if (!GetRoomInDirection(room, direction).HasDoorwayTo((direction + 2) % 4)) return false;
-                            }
-                        }
-                        catch (Exception)
-                        {
-                            // Reached end of legal area, though there should be space here
+                            // ... but we're out of bounds
                             return false;
+                        }
+
+                        if (GetRoomInDirection(room, direction) != null)
+                        {
+                            // ... but the path is already taken
+                            // If the blocking door also has a nicely fitting doorway (to the opposite direction so they meet), this is a match
+                            if (!GetRoomInDirection(room, direction).HasDoorwayTo((direction + 2) % 4))
+                                return false;
                         }
                     }
                     else
                     {
                         // Room does not have a doorway to specific direction: Now we have to check that the neighbouring room is not trying to access this room
-                        try
+                        if (GetRoomInDirection(room, direction) != null)
                         {
-                            if (GetRoomInDirection(room, direction) != null)
-                            {
-                                // There is a room here
-                                // If the other room has a doorway to where we're generating, this is not a match
-                                if (GetRoomInDirection(room, direction).HasDoorwayTo((direction + 2) % 4)) return false;
-                            }
-                        }
-                        catch (Exception)
-                        {
-                            // Reached end of legal area
+                            // There is a room here
+                            // If the other room has a doorway to where we're generating, this is not a match
+                            if (GetRoomInDirection(room, direction).HasDoorwayTo((direction + 2) % 4)) return false;
                         }
                     }
                 }
@@ -184,6 +200,7 @@ namespace LevelGeneration
 
         private Room GetRoomInDirection(Room room, int direction)
         {
+            if (!DirectionIsLegal(room, direction)) return null;
             switch (direction)
             {
                 case South:
@@ -197,6 +214,24 @@ namespace LevelGeneration
                 default:
                     // Direction not correct?
                     throw new Exception("Couldn't find room in direction" + direction);
+            }
+        }
+
+
+        private bool DirectionIsLegal(Room room, int direction)
+        {
+            switch (direction)
+            {
+                case South:
+                    return room.Z - 1 >= 0;
+                case West:
+                    return room.X - 1 >= 0;
+                case North:
+                    return room.Z + 1 < _edgeSize;
+                case East:
+                    return room.X + 1 < _edgeSize;
+                default:
+                    throw new Exception("Direction not valid: " + direction);
             }
         }
     }
