@@ -85,8 +85,7 @@ namespace LevelGeneration
             Room room;
             while (true)
             {
-                // Only dead end rooms for now
-                shape = random.Next(Dead, Dead + 1);
+                shape = random.Next(Dead, FourWay + 1);
                 // Testing with every orientation
                 orientation = random.Next(0, 4);
                 for (int i = 0; i < 4; i++)
@@ -111,10 +110,21 @@ namespace LevelGeneration
 
         private Room GenerateRoom(int x, int z, int orientation, int shape)
         {
-            // TODO Add cases for all rooms
             if (shape == Dead)
             {
                 return new DeadEndRoom(x, z, orientation);
+            }
+            else if (shape == Corridor)
+            {
+                return new CorridorRoom(x, z, orientation);
+            }
+            else if (shape == Corner)
+            {
+                return new CornerRoom(x, z, orientation);
+            }
+            else if (shape == ThreeWay)
+            {
+                return new ThreeWayRoom(x, z, orientation);
             }
             else if (shape == FourWay)
             {
@@ -127,6 +137,8 @@ namespace LevelGeneration
         private bool IsValid(Room room, int comingFrom)
         {
             // TODO: Fix this horrible copy-paste
+            // TODO: We also need to check that we're not blocking a way not yet generated. It's not game breaking, but not optimal either.
+            
             // Checking from south
             if (comingFrom == South)
             {
