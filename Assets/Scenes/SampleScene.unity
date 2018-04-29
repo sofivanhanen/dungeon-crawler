@@ -365,6 +365,7 @@ MonoBehaviour:
     type: 2}
   FourWayRoom: {fileID: 1986570434110586, guid: a298aabfc123c4e908326e8013a0dded,
     type: 2}
+  Player: {fileID: 2069813219}
 --- !u!1 &1481420388 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100000, guid: 43443e735f91441dfa2156679c78fd08, type: 3}

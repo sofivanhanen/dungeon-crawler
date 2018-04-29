@@ -16,6 +16,7 @@ namespace GameObjectControllers
         public GameObject CornerRoom;
         public GameObject ThreeWayRoom;
         public GameObject FourWayRoom;
+        public GameObject Player;
 
         private void Start()
         {
@@ -62,6 +63,15 @@ namespace GameObjectControllers
                     {
                         throw new Exception("Trying to add a room not yet implemented. Room name was: " +
                                             room.GetType().Name);
+                    }
+
+                    // Place the player in the start of dungeon
+                    if (room.Beginning)
+                    {
+                        Vector3 playersPosition = position;
+                        // Rooms are generated at y=0; Player's origin is at 1
+                        playersPosition.y = 1;
+                        Player.transform.position = playersPosition;
                     }
                 }
             }
