@@ -6,9 +6,11 @@ using UnityEngine;
 
 namespace Editor
 {
-    // Tests for HealthAndDyingBehaiourController
+    // Tests for HealthAndDyingBehaviourController
     public class HealthAndDyingBehaviourTest
     {
+        // Values for testing
+
         private const int MaxHealth = 100;
         private const float DamageTakingTimerMax = 0.5f;
 
@@ -84,12 +86,14 @@ namespace Editor
             objectMock.Received().ChangeColor(Color.white);
         }
 
-        private HealthAndDyingBehaviourController GetHealthAndDyingMock(IObjectWithHealth mock)
+        // Mocks
+
+        private static HealthAndDyingBehaviourController GetHealthAndDyingMock(IObjectWithHealth mock)
         {
             return new HealthAndDyingBehaviourController(mock, Color.white, Color.red, MaxHealth, DamageTakingTimerMax);
         }
 
-        private IObjectWithHealth GetObjectWithHealthMock()
+        private static IObjectWithHealth GetObjectWithHealthMock()
         {
             return Substitute.For<IObjectWithHealth>();
         }
