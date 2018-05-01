@@ -4,16 +4,14 @@ using UnityEngine;
 
 namespace GameObjectControllers
 {
-    public class GhostController : MonoBehaviour, IObjectWithHealth
+    public class GhostController : MonoBehaviour, IObjectWithHealth, IEnemyFollowing
     {
-        private const int MaxRange = 5;
-        private const float SpeedOfMovement = 1.0f;
-        private const float SpeedOfTurn = 0.15f;
         private const float MinTimeBetweenAttacks = 1f;
         private float _attackTimer;
         private const int Damage = 30;
 
         private HealthAndDyingBehaviourController _healthAndDying;
+        private EnemyMovementBehaviourController _movement;
 
         public GameObject Player;
 
@@ -21,6 +19,7 @@ namespace GameObjectControllers
         {
             _healthAndDying = new HealthAndDyingBehaviourController(this, new Color(1f, 1f, 1f, 0.5f),
                 new Color(1f, 0.8f, 0.8f, 0.5f), 40, 0.3f);
+            _movement = new EnemyMovementBehaviourController(this, 5, 1.0f, 0.15f);
             Player = GameObject.FindWithTag("Player");
             _attackTimer = MinTimeBetweenAttacks;
         }
@@ -29,20 +28,8 @@ namespace GameObjectControllers
         {
             _attackTimer += Time.deltaTime;
             _healthAndDying.Update(Time.deltaTime);
-            // No check for death here as if we died, we should be destroyed by now
-
-            // TODO: Movement controller for ghost
-            var heading = Player.transform.position - transform.position;
-            // Using sqrMagnitude to save processing power
-            if (heading.sqrMagnitude < MaxRange * MaxRange)
-            {
-                // Player is within range! Let's get 'em!!
-                var distance = heading.magnitude;
-                var movement = heading / distance;
-                transform.rotation =
-                    Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement * -1), SpeedOfTurn);
-                transform.Translate(movement * Time.deltaTime * SpeedOfMovement, Space.World);
-            }
+            // No check for death here since if we died, we should be destroyed by now
+            _movement.Update(transform.position, transform.rotation, Player.transform.position, Time.deltaTime);
         }
 
         private void OnCollisionStay(Collision collision)
@@ -54,6 +41,8 @@ namespace GameObjectControllers
                 _attackTimer = 0;
             }
         }
+        
+        // Health and dying:
 
         public void GetHit(int damage)
         {
@@ -68,6 +57,18 @@ namespace GameObjectControllers
         public void Die()
         {
             Destroy(gameObject);
+        }
+        
+        // Movement:
+
+        public void Move(Vector3 movement)
+        {
+            transform.Translate(movement, Space.World);
+        }
+
+        public void Rotate(Quaternion rotation)
+        {
+            transform.rotation = rotation;
         }
     }
 }
