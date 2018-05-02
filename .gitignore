@@ -4,7 +4,12 @@
 /laskarit/viikko2/Unicafe/target/
 /laskarit/viikko2/Unicafe/nbproject/
 
+# vscode settings #
 .idea/
+
+# doxygen generated #
+/html/
+/latex/
 
 # =============== #
 # Unity generated #

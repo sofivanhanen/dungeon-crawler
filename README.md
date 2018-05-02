@@ -20,6 +20,14 @@ I use ReSharper for code analysis. In order to run the analysis, open the projec
 
 ## Documentation
 
+### Generating html docs from xml tags
+
+You can probably get this done with something like Visual Studio as well. However, [Doxygen](http://www.stack.nl/~dimitri/doxygen/) offers an easy way to do it and it works on Win, Mac and Linux:
+
+[Install Doxygen](http://www.stack.nl/~dimitri/doxygen/download.html) (simple installation for Linux [here](http://xmodulo.com/how-to-generate-documentation-from-source-code-in-linux.html)), navigate to root of project, run command 'doxygen dungeon-crawler.conf', navigate to the generated html folder, run 'firefox index.html' (or use your favourite web browser).
+
+### Files
+
 [Määrittelydokumentti (Specification document)](https://github.com/sofivanhanen/dungeon-crawler/blob/master/dokumentointi/M%C3%A4%C3%A4rittelydokumentti.md)
 
 [Tuntikirjanpito (Time tracking)](https://github.com/sofivanhanen/dungeon-crawler/blob/master/dokumentointi/Tuntikirjanpito.md)
