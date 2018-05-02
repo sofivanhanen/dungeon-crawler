@@ -24,4 +24,12 @@
 ||2|Huoneiden luominen
 ||3|Tasojen generointi
 ||2|Dokumentaatio / sekvenssikaavio / buildit / release
-||**41.5**|
+|29.4.|1.5|Refaktorointia
+||2|Pieniä muutoksia ja korjauksia
+|1.4.|2|Refaktorointia ja testien kirjoittamista
+||1.5|Koodin kommentoimista ja html-dokumentaation generoimisen selvittelyä
+|2.4.|1|xml-dokumentaatio-kommenttien kirjoittamista
+||1|Vihollisten generointi
+||1|Tikapuut / tasoilla eteneminen
+||3|Dokumentaatiota, uudet buildit ja uusi release
+||**54.5**|
