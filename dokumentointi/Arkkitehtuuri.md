@@ -2,14 +2,15 @@
 
 ## Luokkakaavio
 
-Unity-kehitys ei lähtökohtaisesti ole _oliopohjaista_, vaan _komponenttipohjaista_.
-Tämä 'luokkakaavio' ei siis kuvaa luokkia, vaan _GameObjecteja_, Unityn keskeisiä rakennuspalikoita, ja niihin liittyvää koodia komponenttien eli _Scriptien_ muodossa.
-Perintänä on kuvattu Unityn _Tag_-systeemi: Ghost-vihollisella on tagi Enemy, jonka ansiosta tunnistetaan, että kyseessä on vihollinen.
-Ei siis ole Enemy-luokkaa, eikä Enemy itse ole mikään, jolla olisi komponentteja, vaan kaaviossa on kuvattu, että kaikilla GameObjecteilla, joilla on Enemy-tag, on komponenttina tietyt Scriptit.
+Päivitetty 2.5.2018. Kaavio on jonkin verran yksinkertaistettu.
 
-Lisäys 24.4. Testattavuuden vuoksi minun piti muuttaa lähestymistapaani: Nykyinen sovellus noudattaa pääpiirteittäin samaa rakennetta, mutta komponentit eivät enää olekaan Unitylle tyypillisimpiä MonoDevelop-scriptejä, vaan helposti testattavissa olevia apuluokkia, jotka eivät tiedä omistajastaan (eli GameObjectistaan) mitään muuta kuin mahdollisen rajapinnan tarjoamat tiedot.
-Nyt ne siis vastaavatkin perinteisiä olio-ohjelmoinnin luokkia.
-Päivitän tämän kaavion kuvaamaan myös tasogeneraatiota pian.
+Unity-kehityksessä on käytössä tavallisten C#-rakenteiden lisäksi GameObjecteja sekä Unityn omia MonoDevelop-skriptejä, jotka suoraan ohjaavat näitä objekteja.
+Allaolevassa luokkakaaviossa MonoDevelop-skriptit ovat tyypiltään 'Controller'.
+GameObjectit ovat ne oliot, jotka ruudulla näkyy, eli GameObjectit ja niiden kontrollerit vastaavat UI-puolesta.
+Object-tyyppiset oliot vastaavat sovelluslogiikasta.
+Ne ovat n.s. 'Behaviour Controllers'.
+Tag-tyyppiset oliot viittaavat Unityn tag-systeemiin.
+Näin GameObjectit voivat omalla tavallaan toteuttaa perintää: Esimerkiksi Ghost-oliolla on tagi Enemy, jolloin muut GameObjectit ja niiden kontrollerit voivat tunnistaa, että kyseinen GameObject oli Enemy.
 
 ![Luokkaaavio](class_diagram.png)
 
