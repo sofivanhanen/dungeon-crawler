@@ -16,6 +16,7 @@ namespace GameObjectControllers
         public GameObject CornerRoom;
         public GameObject ThreeWayRoom;
         public GameObject FourWayRoom;
+        public GameObject Ladder;
         public GameObject Ghosts2;
         public GameObject Ghosts4;
         public GameObject Player;
@@ -102,6 +103,14 @@ namespace GameObjectControllers
                                 builtRoom.transform.Find("Wall_north").gameObject.SetActive(false);
                                 break;
                         }
+                    }
+                    
+                    // Placing ladders
+                    if (room.End)
+                    {
+                        Vector3 ladderPosition = position;
+                        ladderPosition.y = 0.1f;
+                        Instantiate(Ladder, ladderPosition, new Quaternion());
                     }
                     
                     // Placing enemies

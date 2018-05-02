@@ -19,6 +19,7 @@ namespace LevelGeneration
 
         private int _edgeSize;
         private int _difficulty;
+        private bool _hasEnd;
         private Room[,] _level;
         private readonly Random _random;
 
@@ -38,6 +39,7 @@ namespace LevelGeneration
 
             _edgeSize = edgeSize;
             _difficulty = difficulty;
+            _hasEnd = false;
             _level = new Room[_edgeSize, _edgeSize];
 
             // Choose starting place
@@ -131,27 +133,35 @@ namespace LevelGeneration
                         }
                     }
                 }
-                
-                // Here we add enemies to the room
-                switch (_random.Next(_difficulty, 10 + _difficulty))
+
+                // Generating a ladder room
+                if (!_hasEnd && room.GetType().Name == "DeadEndRoom")
                 {
-                    case 1:
-                    case 2:
-                    case 3:
-                    case 4:
-                        room.Enemies = 0;
-                        break;
-                    case 5:
-                    case 6:
-                    case 7:
-                        room.Enemies = 2;
-                        break;
-                    default:
-                        room.Enemies = 4;
-                        break;
+                    room.End = true;
+                    _hasEnd = true;
                 }
-                
-                // TODO: Generate stairways here
+
+                // Generating enemies
+                if (!room.End)
+                {
+                    switch (_random.Next(_difficulty, 10 + _difficulty))
+                    {
+                        case 1:
+                        case 2:
+                        case 3:
+                        case 4:
+                            room.Enemies = 0;
+                            break;
+                        case 5:
+                        case 6:
+                        case 7:
+                            room.Enemies = 2;
+                            break;
+                        default:
+                            room.Enemies = 4;
+                            break;
+                    }
+                }
 
                 ContinueFrom(room);
             }

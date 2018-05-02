@@ -324,6 +324,7 @@ MonoBehaviour:
     type: 2}
   FourWayRoom: {fileID: 1986570434110586, guid: a298aabfc123c4e908326e8013a0dded,
     type: 2}
+  Ladder: {fileID: 1676924114184578, guid: 31d968dcb2bcd4d02ba803bb19ac39e5, type: 2}
   Ghosts2: {fileID: 1820104463046238, guid: ccf0331702bae4f4db8ce06ede215ccc, type: 2}
   Ghosts4: {fileID: 1991998974711092, guid: d33688e9865674893b5f5db134142837, type: 2}
   Player: {fileID: 2069813219}
