@@ -13,10 +13,8 @@ namespace GameObjectControllers
 
         private void OnTriggerEnter(Collider other)
         {
-            Debug.Log("In OnTriggerEnter");
             if (other.gameObject.CompareTag("Player"))
             {
-                Debug.Log("It is a player!");
                 _gameController.GetComponent<GameMasterController>().LevelUp();
             }
         }

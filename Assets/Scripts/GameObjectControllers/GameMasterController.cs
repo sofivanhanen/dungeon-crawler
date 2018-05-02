@@ -21,22 +21,38 @@ namespace GameObjectControllers
         public GameObject Ghosts2;
         public GameObject Ghosts4;
         public GameObject Player;
+        public GameObject MainCamera;
+        public GameObject BlankCamera;
 
         private void Start()
         {
+            SetViewBlank();
             _levelGenerator = new LevelGenerator();
             _currentLevel = 1;
-            // TODO: Generating a level takes a while; add a loading screen
             GenerateLevel();
+            SetViewNormal();
+        }
+
+        private void SetViewBlank()
+        {
+            MainCamera.SetActive(false);
+            BlankCamera.SetActive(true);
+        }
+
+        private void SetViewNormal()
+        {
+            BlankCamera.SetActive(false);
+            MainCamera.SetActive(true);
         }
 
         public void LevelUp()
         {
-            Debug.Log("LevelUp called!");
             // LadderController calls this when the player steps into a ladder
+            SetViewBlank();
             _currentLevel++;
             Destroy(_currentLevelObject);
             GenerateLevel();
+            SetViewNormal();
         }
 
         private void GenerateLevel()

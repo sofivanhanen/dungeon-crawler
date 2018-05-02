@@ -10,11 +10,18 @@ namespace GameObjectControllers
         public GameObject Player;
         private CameraMovementBehaviourController _movement;
 
-        private void OnEnable()
+        private void Start()
         {
             _movement = new CameraMovementBehaviourController();
             _movement.Interpolation = 5.0f;
             _movement.Offset = transform.position - Player.transform.position;
+        }
+
+        private void OnEnable()
+        {
+            // OnEnable gets called in the beginning and between levels
+            // We force instant movement here in order to avoid an awkward looking transision
+            transform.position = Player.transform.position + _movement.Offset;
         }
 
         private void LateUpdate()
