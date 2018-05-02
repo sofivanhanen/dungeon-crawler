@@ -3,11 +3,14 @@
 
 A Diablo / Fate -style dungeon crawler game, made with Unity, using C#. Made as part of **OTMK18**.
 
-Builds in the Builds-public folder. Move with arrow keys or WASD, click to attack. Pressing escape exits the game.
+Builds in the Builds-public folder, and found as releases. Move with arrow keys or WASD, click to attack. Pressing escape exits the game.
 
 ## Releases
 
-First pre-release is here! Check it out:
+**Most recent release:**
+[v0.9.1](https://github.com/sofivanhanen/dungeon-crawler/releases/tag/v0.9.1)
+
+First pre-release:
 [v0.9](https://github.com/sofivanhanen/dungeon-crawler/releases/tag/v0.9)
 
 ## Testing
@@ -32,4 +35,6 @@ You can probably get this done with something like Visual Studio as well. Howeve
 
 [Tuntikirjanpito (Time tracking)](https://github.com/sofivanhanen/dungeon-crawler/blob/master/dokumentointi/Tuntikirjanpito.md)
 
-[Arkkitehtuuri (Architecture / diagrams)](https://github.com/sofivanhanen/dungeon-crawler/blob/master/dokumentointi/Arkkitehtuuri.md)
+[Arkkitehtuurikuvaus (Architecture / diagrams)](https://github.com/sofivanhanen/dungeon-crawler/blob/master/dokumentointi/Arkkitehtuuri.md)
+
+[Käyttöohje (Install instructions / how to play)](https://github.com/sofivanhanen/dungeon-crawler/blob/master/dokumentointi/K%C3%A4ytt%C3%B6ohje.md)
