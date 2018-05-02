@@ -1,16 +1,26 @@
 # Arkkitehtuuri
 
+## Arkkitehtuurikuvaus
+
+Sovellus koostuu kolmesta eri tasosta:
+Korkean tason **GameObject**-olioista, joita luodaan ja käsitellään Unityn sisällä,
+**MonoDevelop**-skripteistä, eli luokista jotka kontrolloivat GameObjecteja suoraan,
+ja perinteisistä **luokista**, jotka suorittavat sovelluslogiikkaa.
+
+Tämä rakenne on helposti testattava:
+Koska GameObjectit ja niitä ohjaavat MonoDevelop-skriptit hoitavat UI-puolen ja näin kaikki riippuvuuksia vaativat toimet, sovelluslogiikkaa käsitteleville luokille on helppo kirjoittaa kattavat yksikkötestit.
+Käytössä on lisäksi **rajapintoja**:
+Kun on tärkeää, että logiikkaa käsittelevä luokka pääsee ohjaamaan jotain osaa GameObjectin käyttäytymisestä, sen GameObjektin MonoDevelop-kontrollerin tulee implementoida jokin luomani rajapinta, ja näin logiikkaluokka on riippuvainen vain rajapinnasta, eikä MonoDevelop-skriptistä, joita on käytännössä mahdoton mockata.
+
 ## Luokkakaavio
 
 Päivitetty 2.5.2018. Kaavio on jonkin verran yksinkertaistettu.
 
-Unity-kehityksessä on käytössä tavallisten C#-rakenteiden lisäksi GameObjecteja sekä Unityn omia MonoDevelop-skriptejä, jotka suoraan ohjaavat näitä objekteja.
 Allaolevassa luokkakaaviossa MonoDevelop-skriptit ovat tyypiltään 'Controller'.
-GameObjectit ovat ne oliot, jotka ruudulla näkyy, eli GameObjectit ja niiden kontrollerit vastaavat UI-puolesta.
 Object-tyyppiset oliot vastaavat sovelluslogiikasta.
-Ne ovat n.s. 'Behaviour Controllers'.
+Ne ovat kaikki nimetty tyyliin 'XxBehaviourController'.
 Tag-tyyppiset oliot viittaavat Unityn tag-systeemiin.
-Näin GameObjectit voivat omalla tavallaan toteuttaa perintää: Esimerkiksi Ghost-oliolla on tagi Enemy, jolloin muut GameObjectit ja niiden kontrollerit voivat tunnistaa, että kyseinen GameObject oli Enemy.
+Näin GameObjectit voivat omalla tavallaan toteuttaa perintää: Esimerkiksi Ghost-oliolla on tagi Enemy, jolloin muut GameObjectit ja niiden kontrollerit voivat tunnistaa, että kyseinen GameObject on Enemy.
 
 ![Luokkaaavio](class_diagram.png)
 
