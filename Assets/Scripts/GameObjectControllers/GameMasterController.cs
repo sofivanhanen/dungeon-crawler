@@ -16,6 +16,8 @@ namespace GameObjectControllers
         public GameObject CornerRoom;
         public GameObject ThreeWayRoom;
         public GameObject FourWayRoom;
+        public GameObject Ghosts2;
+        public GameObject Ghosts4;
         public GameObject Player;
 
         private void Start()
@@ -27,7 +29,7 @@ namespace GameObjectControllers
 
         public void GenerateLevel()
         {
-            Room[,] level = _levelGenerator.GenerateLevel(EdgeLength);
+            Room[,] level = _levelGenerator.GenerateLevel(EdgeLength, 1);
             for (int x = 0; x < EdgeLength; x++)
             {
                 for (int z = 0; z < EdgeLength; z++)
@@ -100,6 +102,19 @@ namespace GameObjectControllers
                                 builtRoom.transform.Find("Wall_north").gameObject.SetActive(false);
                                 break;
                         }
+                    }
+                    
+                    // Placing enemies
+                    switch (room.Enemies)
+                    {
+                            case 0:
+                                break;
+                            case 2:
+                                Instantiate(Ghosts2, position, new Quaternion());
+                                break;
+                            case 4:
+                                Instantiate(Ghosts4, position, new Quaternion());
+                                break;
                     }
 
                     // Place the player in the start of dungeon

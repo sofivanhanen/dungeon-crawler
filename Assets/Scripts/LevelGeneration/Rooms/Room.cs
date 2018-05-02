@@ -7,6 +7,7 @@ namespace LevelGeneration.Rooms
         public readonly int X;
         public readonly int Z;
         public readonly int Orientation;
+        public int Enemies;
 
         public bool Beginning;
         public bool HideSouthernWall;
@@ -19,6 +20,7 @@ namespace LevelGeneration.Rooms
             X = x;
             Z = z;
             Orientation = orientation;
+            Enemies = 0;
             Beginning = false;
             HideSouthernWall = false;
             HideWesternWall = false;

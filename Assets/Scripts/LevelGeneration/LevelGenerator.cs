@@ -18,6 +18,7 @@ namespace LevelGeneration
         private const int FourWay = 14;
 
         private int _edgeSize;
+        private int _difficulty;
         private Room[,] _level;
         private readonly Random _random;
 
@@ -26,8 +27,9 @@ namespace LevelGeneration
             _random = new Random();
         }
 
-        public Room[,] GenerateLevel(int edgeSize)
+        public Room[,] GenerateLevel(int edgeSize, int difficulty)
         {
+            // TODO: Edgesize should be determined by difficulty
             // Setup
             if (edgeSize < 3)
             {
@@ -35,6 +37,7 @@ namespace LevelGeneration
             }
 
             _edgeSize = edgeSize;
+            _difficulty = difficulty;
             _level = new Room[_edgeSize, _edgeSize];
 
             // Choose starting place
@@ -47,7 +50,6 @@ namespace LevelGeneration
 
             // Generation finished, return room
             return _level;
-            // TODO: Generate monsters and stairways
         }
 
         private void ContinueFrom(Room room)
@@ -129,6 +131,27 @@ namespace LevelGeneration
                         }
                     }
                 }
+                
+                // Here we add enemies to the room
+                switch (_random.Next(_difficulty, 10 + _difficulty))
+                {
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 4:
+                        room.Enemies = 0;
+                        break;
+                    case 5:
+                    case 6:
+                    case 7:
+                        room.Enemies = 2;
+                        break;
+                    default:
+                        room.Enemies = 4;
+                        break;
+                }
+                
+                // TODO: Generate stairways here
 
                 ContinueFrom(room);
             }

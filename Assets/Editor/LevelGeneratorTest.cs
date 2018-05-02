@@ -14,7 +14,7 @@ namespace Editor
         {
             var generator = new LevelGenerator();
 
-            Assert.Throws<Exception>(() => generator.GenerateLevel(2));
+            Assert.Throws<Exception>(() => generator.GenerateLevel(2, 1));
         }
 
         // Testing that with big enough edge size, we get a level of said size
@@ -23,7 +23,7 @@ namespace Editor
         {
             var generator = new LevelGenerator();
 
-            var level = generator.GenerateLevel(3);
+            var level = generator.GenerateLevel(3, 1);
 
             // Testing both arrays since level is a two-dimensional array
             Assert.AreEqual(level.GetLength(0), 3);
