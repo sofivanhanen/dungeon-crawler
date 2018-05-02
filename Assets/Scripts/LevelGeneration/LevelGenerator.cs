@@ -30,14 +30,20 @@ namespace LevelGeneration
 
         public Room[,] GenerateLevel(int edgeSize, int difficulty)
         {
-            // TODO: Edgesize should be determined by difficulty
             // Setup
-            if (edgeSize < 3)
+            if (edgeSize == -1)
+            {
+                _edgeSize = 3 + difficulty * 2;
+            }
+            else if (edgeSize < 3)
             {
                 throw new Exception("Cannot generate level smaller than 3x3");
             }
+            else
+            {
+                _edgeSize = edgeSize;
+            }
 
-            _edgeSize = edgeSize;
             _difficulty = difficulty;
             _hasEnd = false;
             _level = new Room[_edgeSize, _edgeSize];

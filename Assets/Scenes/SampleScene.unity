@@ -285,7 +285,7 @@ GameObject:
   - component: {fileID: 630334808}
   m_Layer: 0
   m_Name: GameMaster
-  m_TagString: Untagged
+  m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -314,7 +314,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e61c40465f21f49efaf436a745dff3eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EdgeLength: 5
   DeadEndRoom: {fileID: 1543324616513240, guid: 64857f4bf3fb2441bb7d5b4af4839ad0,
     type: 2}
   CorridorRoom: {fileID: 1789731832173934, guid: 48ac3f715182e48e4ab5355a87bee961,
@@ -455,7 +454,7 @@ Transform:
   m_GameObject: {fileID: 1585882643}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2

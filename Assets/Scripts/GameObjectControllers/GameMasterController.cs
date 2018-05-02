@@ -8,9 +8,10 @@ namespace GameObjectControllers
     public class GameMasterController : MonoBehaviour
     {
         private LevelGenerator _levelGenerator;
+        private int _currentLevel;
+        private GameObject _currentLevelObject;
 
         // Variables set in inspector
-        public int EdgeLength;
         public GameObject DeadEndRoom;
         public GameObject CorridorRoom;
         public GameObject CornerRoom;
@@ -24,22 +25,33 @@ namespace GameObjectControllers
         private void Start()
         {
             _levelGenerator = new LevelGenerator();
+            _currentLevel = 1;
             // TODO: Generating a level takes a while; add a loading screen
             GenerateLevel();
         }
 
-        public void GenerateLevel()
+        public void LevelUp()
         {
-            Room[,] level = _levelGenerator.GenerateLevel(EdgeLength, 1);
-            for (int x = 0; x < EdgeLength; x++)
+            Debug.Log("LevelUp called!");
+            // LadderController calls this when the player steps into a ladder
+            _currentLevel++;
+            Destroy(_currentLevelObject);
+            GenerateLevel();
+        }
+
+        private void GenerateLevel()
+        {
+            _currentLevelObject = new GameObject();
+            Room[,] level = _levelGenerator.GenerateLevel(-1, _currentLevel);
+            for (int x = 0; x < level.GetLength(0); x++)
             {
-                for (int z = 0; z < EdgeLength; z++)
+                for (int z = 0; z < level.GetLength(1); z++)
                 {
                     Room room = level[x, z];
                     if (room == null) continue;
                     Vector3 position = new Vector3();
-                    position.x = ((0 - EdgeLength / 2) + room.X) * 10;
-                    position.z = ((0 - EdgeLength / 2) + room.Z) * 10;
+                    position.x = ((0 - level.GetLength(0) / 2) + room.X) * 10;
+                    position.z = ((0 - level.GetLength(1) / 2) + room.Z) * 10;
                     Quaternion rotation = Quaternion.Euler(0, 90 * room.Orientation, 0);
                     GameObject builtRoom;
                     switch (room.GetType().Name)
@@ -110,20 +122,26 @@ namespace GameObjectControllers
                     {
                         Vector3 ladderPosition = position;
                         ladderPosition.y = 0.1f;
-                        Instantiate(Ladder, ladderPosition, new Quaternion());
+                        Instantiate(Ladder, ladderPosition, new Quaternion()).transform.parent = builtRoom.transform;
                     }
-                    
+
+                    GameObject enemies = null;
                     // Placing enemies
                     switch (room.Enemies)
                     {
                             case 0:
                                 break;
                             case 2:
-                                Instantiate(Ghosts2, position, new Quaternion());
+                                enemies = Instantiate(Ghosts2, position, new Quaternion());
                                 break;
                             case 4:
-                                Instantiate(Ghosts4, position, new Quaternion());
+                                enemies = Instantiate(Ghosts4, position, new Quaternion());
                                 break;
+                    }
+
+                    if (enemies != null)
+                    {
+                        enemies.transform.parent = builtRoom.transform;
                     }
 
                     // Place the player in the start of dungeon
@@ -134,6 +152,10 @@ namespace GameObjectControllers
                         playersPosition.y = 1;
                         Player.transform.position = playersPosition;
                     }
+
+                    // We set enemies and ladders as children of the room, and rooms as children of the leve object,
+                    // so we can easily delete the entire level when switching levels
+                    builtRoom.transform.parent = _currentLevelObject.transform;
                 }
             }
         }
