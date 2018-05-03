@@ -2,8 +2,10 @@
 
 ## Ohjelman käynnistäminen
 
-Lataa viimeisin omalle käyttöjärjestelmällesi sopiva release.
-Suorita zip-tiedoston sisältämä suoritettava tiedosto. Peli käynnistyy automaattisesti.
+Lataa viimeisin omalle käyttöjärjestelmällesi sopiva release ja pura .zip-tiedosto.
+Suorita kansion sisältämä suoritettava tiedosto
+(Windowsilla .exe, Linuxilla .x86, Macilla .app tms.)
+Peli käynnistyy automaattisesti.
 
 ## Pelaaminen
 
