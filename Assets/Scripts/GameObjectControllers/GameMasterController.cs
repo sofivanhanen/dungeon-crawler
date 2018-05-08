@@ -2,6 +2,7 @@
 using LevelGeneration;
 using LevelGeneration.Rooms;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace GameObjectControllers
 {
@@ -23,6 +24,7 @@ namespace GameObjectControllers
         public GameObject Player;
         public GameObject MainCamera;
         public GameObject BlankCamera;
+        public Text Level;
 
         private void Start()
         {
@@ -31,6 +33,7 @@ namespace GameObjectControllers
             _currentLevel = 1;
             GenerateLevel();
             SetViewNormal();
+            Level.text = "Level: " + 1;
         }
 
         private void SetViewBlank()
@@ -53,6 +56,7 @@ namespace GameObjectControllers
             Destroy(_currentLevelObject);
             GenerateLevel();
             SetViewNormal();
+            Level.text = "Level: " + _currentLevel;
         }
 
         private void GenerateLevel()
