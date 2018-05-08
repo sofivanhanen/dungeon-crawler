@@ -24,6 +24,9 @@ namespace GameObjectControllers
         public GameObject Player;
         public GameObject MainCamera;
         public GameObject BlankCamera;
+        public GameObject PausedTintPlane;
+        public GameObject PlayingUi;
+        public GameObject PausedUi;
         public Text Level;
 
         private void Start()
@@ -34,6 +37,38 @@ namespace GameObjectControllers
             GenerateLevel();
             SetViewNormal();
             Level.text = "Level: " + 1;
+        }
+
+        private void Update()
+        {
+            // Check for pause
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                if (Time.timeScale == 1.0f)
+                {
+                    Pause();
+                }
+                else
+                {
+                    UnPause();
+                }
+            }
+        }
+
+        private void Pause()
+        {
+            Time.timeScale = 0f;
+            PausedTintPlane.SetActive(true);
+            PlayingUi.SetActive(false);
+            PausedUi.SetActive(true);
+        }
+
+        private void UnPause()
+        {
+            PausedUi.SetActive(false);
+            PlayingUi.SetActive(true);
+            PausedTintPlane.SetActive(false);
+            Time.timeScale = 1.0f;
         }
 
         private void SetViewBlank()
@@ -136,7 +171,7 @@ namespace GameObjectControllers
                                 break;
                         }
                     }
-                    
+
                     // Placing ladders
                     if (room.End)
                     {
@@ -149,14 +184,14 @@ namespace GameObjectControllers
                     // Placing enemies
                     switch (room.Enemies)
                     {
-                            case 0:
-                                break;
-                            case 2:
-                                enemies = Instantiate(Ghosts2, position, new Quaternion());
-                                break;
-                            case 4:
-                                enemies = Instantiate(Ghosts4, position, new Quaternion());
-                                break;
+                        case 0:
+                            break;
+                        case 2:
+                            enemies = Instantiate(Ghosts2, position, new Quaternion());
+                            break;
+                        case 4:
+                            enemies = Instantiate(Ghosts4, position, new Quaternion());
+                            break;
                     }
 
                     if (enemies != null)
