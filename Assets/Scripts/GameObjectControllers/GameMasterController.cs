@@ -3,6 +3,8 @@ using LevelGeneration;
 using LevelGeneration.Rooms;
 using UnityEngine;
 using UnityEngine.Analytics;
+using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace GameObjectControllers
@@ -35,6 +37,8 @@ namespace GameObjectControllers
 
         private void Start()
         {
+            RenderSettings.ambientMode = AmbientMode.Flat;
+            RenderSettings.ambientLight = Color.black;
             SetViewBlank();
             _levelGenerator = new LevelGenerator();
             _currentLevel = 1;
@@ -46,7 +50,15 @@ namespace GameObjectControllers
 
         private void Update()
         {
-            if (_gameOver) return;
+            if (_gameOver)
+            {
+                // Restart the game if game is over and r pressed
+                if (Input.GetKeyDown(KeyCode.R))
+                {
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                }
+                return;
+            }
             
             // Check for pause
             if (Input.GetKeyDown(KeyCode.P))
