@@ -15,10 +15,13 @@ namespace GameObjectControllers
         public GameObject Sword;
         public Text Health;
 
+        public bool Dead;
+
         private void Start()
         {
             _healthAndDying =
                 new HealthAndDyingBehaviourController(this, new Color(1f, 1f, 1f), new Color(1f, 0.7f, 0.7f), 100, 1f);
+            Dead = false;
         }
 
         private void Update()
@@ -61,7 +64,7 @@ namespace GameObjectControllers
 
         public void Die()
         {
-            // TODO: How should the player die / what happens?
+            Dead = true;
             ChangeColor(new Color(1f, 0.3f, 0.3f));
             Health.text = "Health: 0 :(";
         }

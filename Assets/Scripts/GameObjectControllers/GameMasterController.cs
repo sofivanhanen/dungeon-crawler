@@ -2,6 +2,7 @@
 using LevelGeneration;
 using LevelGeneration.Rooms;
 using UnityEngine;
+using UnityEngine.Analytics;
 using UnityEngine.UI;
 
 namespace GameObjectControllers
@@ -11,6 +12,7 @@ namespace GameObjectControllers
         private LevelGenerator _levelGenerator;
         private int _currentLevel;
         private GameObject _currentLevelObject;
+        private bool _gameOver;
 
         // Variables set in inspector
         public GameObject DeadEndRoom;
@@ -27,6 +29,8 @@ namespace GameObjectControllers
         public GameObject PausedTintPlane;
         public GameObject PlayingUi;
         public GameObject PausedUi;
+        public GameObject GameOverUi;
+        public Text GameOverLevel;
         public Text Level;
 
         private void Start()
@@ -34,6 +38,7 @@ namespace GameObjectControllers
             SetViewBlank();
             _levelGenerator = new LevelGenerator();
             _currentLevel = 1;
+            _gameOver = false;
             GenerateLevel();
             SetViewNormal();
             Level.text = "Level: " + 1;
@@ -41,17 +46,26 @@ namespace GameObjectControllers
 
         private void Update()
         {
+            if (_gameOver) return;
+            
             // Check for pause
             if (Input.GetKeyDown(KeyCode.P))
             {
                 if (Time.timeScale == 1.0f)
                 {
                     Pause();
+                    return;
                 }
                 else
                 {
                     UnPause();
                 }
+            }
+            
+            // Check for game over
+            if (Player.GetComponent<PlayerController>().Dead)
+            {
+                GameOver();
             }
         }
 
@@ -69,6 +83,15 @@ namespace GameObjectControllers
             PlayingUi.SetActive(true);
             PausedTintPlane.SetActive(false);
             Time.timeScale = 1.0f;
+        }
+
+        private void GameOver()
+        {
+            PausedTintPlane.SetActive(true);
+            PlayingUi.SetActive(false);
+            GameOverUi.SetActive(true);
+            GameOverLevel.text = "Reached level " + _currentLevel + "!";
+            _gameOver = true;
         }
 
         private void SetViewBlank()
