@@ -1,6 +1,7 @@
 ﻿using BehaviourControllers;
 using Interfaces;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace GameObjectControllers
 {
@@ -12,6 +13,7 @@ namespace GameObjectControllers
         private HealthAndDyingBehaviourController _healthAndDying;
 
         public GameObject Sword;
+        public Text Health;
 
         private void Start()
         {
@@ -43,6 +45,8 @@ namespace GameObjectControllers
                 var swordController = Sword.GetComponent<SwordController>();
                 swordController.Attack();
             }
+
+            Health.text = "Health: " + _healthAndDying.Health;
         }
 
         public void GetHit(int damage)
@@ -59,6 +63,7 @@ namespace GameObjectControllers
         {
             // TODO: How should the player die / what happens?
             ChangeColor(new Color(1f, 0.3f, 0.3f));
+            Health.text = "Health: 0 :(";
         }
     }
 }
