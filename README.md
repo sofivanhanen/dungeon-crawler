@@ -23,7 +23,13 @@ I use ReSharper for code analysis. In order to run the analysis, open the projec
 
 ## Documentation
 
-### Generating html docs from xml tags
+### HTML docs from XML-tags
+
+#### Easy way
+
+The ready-generated HTML-files are as a package in the Documentation folder. Clone the repo, unpack the file (HTML-documentation.tar.gz), open the html-folder and open the index.html-file with some browser.
+
+#### Generating by hand
 
 You can probably get this done with something like Visual Studio as well. However, [Doxygen](http://www.stack.nl/~dimitri/doxygen/) offers an easy way to do it and it works on Win, Mac and Linux:
 
@@ -31,10 +37,12 @@ You can probably get this done with something like Visual Studio as well. Howeve
 
 ### Files
 
-[Määrittelydokumentti (Specification document)](https://github.com/sofivanhanen/dungeon-crawler/blob/master/dokumentointi/M%C3%A4%C3%A4rittelydokumentti.md)
+.md-files are in Finnish, but i.e. the diagrams in the architecture file are in English.
 
-[Tuntikirjanpito (Time tracking)](https://github.com/sofivanhanen/dungeon-crawler/blob/master/dokumentointi/Tuntikirjanpito.md)
+[Määrittelydokumentti (Specification document)](https://github.com/sofivanhanen/dungeon-crawler/blob/master/Documentation/M%C3%A4%C3%A4rittelydokumentti.md)
 
-[Arkkitehtuurikuvaus (Architecture / diagrams)](https://github.com/sofivanhanen/dungeon-crawler/blob/master/dokumentointi/Arkkitehtuuri.md)
+[Tuntikirjanpito (Time tracking)](https://github.com/sofivanhanen/dungeon-crawler/blob/master/Documentation/Tuntikirjanpito.md)
 
-[Käyttöohje (Install instructions / how to play)](https://github.com/sofivanhanen/dungeon-crawler/blob/master/dokumentointi/K%C3%A4ytt%C3%B6ohje.md)
+[Arkkitehtuurikuvaus (Architecture / diagrams)](https://github.com/sofivanhanen/dungeon-crawler/blob/master/Documentation/Arkkitehtuuri.md)
+
+[Käyttöohje (Install instructions / how to play)](https://github.com/sofivanhanen/dungeon-crawler/blob/master/Documentation/K%C3%A4ytt%C3%B6ohje.md)
