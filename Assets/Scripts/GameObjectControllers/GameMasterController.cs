@@ -2,7 +2,6 @@
 using LevelGeneration;
 using LevelGeneration.Rooms;
 using UnityEngine;
-using UnityEngine.Analytics;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -63,7 +62,7 @@ namespace GameObjectControllers
             // Check for pause
             if (Input.GetKeyDown(KeyCode.P))
             {
-                if (Time.timeScale == 1.0f)
+                if (Time.timeScale.Equals(1.0f))
                 {
                     Pause();
                     return;
@@ -139,9 +138,11 @@ namespace GameObjectControllers
                 {
                     Room room = level[x, z];
                     if (room == null) continue;
-                    Vector3 position = new Vector3();
-                    position.x = ((0 - level.GetLength(0) / 2) + room.X) * 10;
-                    position.z = ((0 - level.GetLength(1) / 2) + room.Z) * 10;
+                    Vector3 position = new Vector3
+                    {
+                        x = ((0 - level.GetLength(0) / 2) + room.X) * 10,
+                        z = ((0 - level.GetLength(1) / 2) + room.Z) * 10
+                    };
                     Quaternion rotation = Quaternion.Euler(0, 90 * room.Orientation, 0);
                     GameObject builtRoom;
                     switch (room.GetType().Name)

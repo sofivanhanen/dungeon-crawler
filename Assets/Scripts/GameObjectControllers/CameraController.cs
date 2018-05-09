@@ -12,9 +12,11 @@ namespace GameObjectControllers
 
         private void Start()
         {
-            _movement = new CameraMovementBehaviourController();
-            _movement.Interpolation = 5.0f;
-            _movement.Offset = transform.position - Player.transform.position;
+            _movement = new CameraMovementBehaviourController
+            {
+                Interpolation = 5.0f,
+                Offset = transform.position - Player.transform.position
+            };
         }
 
         private void OnEnable()

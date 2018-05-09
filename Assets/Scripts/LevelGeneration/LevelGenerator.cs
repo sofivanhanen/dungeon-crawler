@@ -93,14 +93,12 @@ namespace LevelGeneration
 
         private void Generate(int x, int z, int comingFrom)
         {
-            int shape;
-            int orientation;
             Room room;
             while (true)
             {
-                shape = _random.Next(Dead, FourWay + 1);
+                var shape = _random.Next(Dead, FourWay + 1);
                 // Testing with every orientation
-                orientation = _random.Next(0, 4);
+                var orientation = _random.Next(0, 4);
                 for (int i = 0; i < 4; i++)
                 {
                     room = GenerateRoom(x, z, orientation % 4, shape);

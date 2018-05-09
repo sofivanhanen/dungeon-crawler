@@ -83,10 +83,9 @@ namespace Editor
             var controller = GetEnemyMovementMock(enemyMock);
             var start = new Vector3();
             var rotation = new Quaternion();
-            Vector3 playerLocation;
 
             // No call here
-            playerLocation = new Vector3(MaxRange, 1f, 0f);
+            var playerLocation = new Vector3(MaxRange, 1f, 0f);
             controller.Update(start, rotation, playerLocation, 0.5f);
 
             // Call expected
