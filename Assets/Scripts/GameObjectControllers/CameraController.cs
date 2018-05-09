@@ -3,10 +3,14 @@ using BehaviourControllers;
 
 namespace GameObjectControllers
 {
-    // Our main camera controller
-    // Tested in CameraBehaviourTest
+    /// <summary>
+    /// The main camera controller, follows player
+    /// </summary>
     public class CameraController : MonoBehaviour
     {
+        /// <summary>
+        /// The Player GameObject (set in inspector)
+        /// </summary>
         public GameObject Player;
         private CameraMovementBehaviourController _movement;
 
@@ -22,7 +26,7 @@ namespace GameObjectControllers
         private void OnEnable()
         {
             // OnEnable gets called in the beginning and between levels
-            // We force instant movement here in order to avoid an awkward looking transision
+            // We force instant movement here in order to avoid an awkward looking transition
             transform.position = Player.transform.position + _movement.Offset;
         }
 

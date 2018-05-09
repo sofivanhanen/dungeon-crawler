@@ -2,11 +2,15 @@
 
 namespace GameObjectControllers
 {
+    /// <summary>
+    /// Controller of ladders
+    /// In charge of informing the game master when leveling is required
+    /// </summary>
     public class LadderController : MonoBehaviour
     {
         private GameObject _gameController;
 
-        void Start()
+        private void Start()
         {
             _gameController = GameObject.FindWithTag("GameController");
         }

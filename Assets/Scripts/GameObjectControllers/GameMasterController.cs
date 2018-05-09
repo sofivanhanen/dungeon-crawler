@@ -8,6 +8,10 @@ using UnityEngine.UI;
 
 namespace GameObjectControllers
 {
+    /// <summary>
+    /// Controller of GameMaster - the workhorse
+    /// All public variables set in inspector
+    /// </summary>
     public class GameMasterController : MonoBehaviour
     {
         private LevelGenerator _levelGenerator;
@@ -36,13 +40,18 @@ namespace GameObjectControllers
 
         private void Start()
         {
+            // Set scene to dark
             RenderSettings.ambientMode = AmbientMode.Flat;
             RenderSettings.ambientLight = Color.black;
+            
+            // Generate the first level
             SetViewBlank();
             _levelGenerator = new LevelGenerator();
             _currentLevel = 1;
             _gameOver = false;
             GenerateLevel();
+            
+            // Start the game
             SetViewNormal();
             Level.text = "Level: " + 1;
         }
@@ -105,6 +114,7 @@ namespace GameObjectControllers
             _gameOver = true;
         }
 
+        // For turning the screen black during level generation
         private void SetViewBlank()
         {
             MainCamera.SetActive(false);
@@ -117,9 +127,11 @@ namespace GameObjectControllers
             MainCamera.SetActive(true);
         }
 
+        /// <summary>
+        /// LadderController calls this when the player steps into a ladder
+        /// </summary>
         public void LevelUp()
         {
-            // LadderController calls this when the player steps into a ladder
             SetViewBlank();
             _currentLevel++;
             Destroy(_currentLevelObject);
@@ -130,8 +142,11 @@ namespace GameObjectControllers
 
         private void GenerateLevel()
         {
+            // Use LevelGenerator to generate the level
             _currentLevelObject = new GameObject();
             Room[,] level = _levelGenerator.GenerateLevel(-1, _currentLevel);
+            
+            // Create the rooms
             for (int x = 0; x < level.GetLength(0); x++)
             {
                 for (int z = 0; z < level.GetLength(1); z++)

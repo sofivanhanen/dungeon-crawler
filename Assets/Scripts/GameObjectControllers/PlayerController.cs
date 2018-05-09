@@ -5,16 +5,26 @@ using UnityEngine.UI;
 
 namespace GameObjectControllers
 {
+    /// <summary>
+    /// Controls the player object
+    /// </summary>
     public class PlayerController : MonoBehaviour, IObjectWithHealth
     {
         private const float SpeedOfMovement = 5.0f;
         private const float SpeedOfTurn = 0.15f;
-
         private HealthAndDyingBehaviourController _healthAndDying;
 
+        /// <summary>
+        /// Player's sword (set in inspector)
+        /// </summary>
         public GameObject Sword;
+        /// <summary>
+        /// Text object visualizing the amount of health left
+        /// </summary>
         public Text Health;
-
+        /// <summary>
+        /// Indicator for other GameObject whether player is dead or not
+        /// </summary>
         public bool Dead;
 
         private void Start()
@@ -52,16 +62,24 @@ namespace GameObjectControllers
             Health.text = "Health: " + _healthAndDying.Health;
         }
 
+        // Health and dying
+        
+        /// <summary>
+        /// Called from other GameObjects hitting this object (mainly enemies)
+        /// </summary>
+        /// <param name="damage">Amount of damage dealt</param>
         public void GetHit(int damage)
         {
             _healthAndDying.GetHit(damage, false);
         }
 
+        /// <inheritdoc />
         public void ChangeColor(Color newColor)
         {
             gameObject.GetComponent<Renderer>().material.color = newColor;
         }
 
+        /// <inheritdoc />
         public void Die()
         {
             Dead = true;
