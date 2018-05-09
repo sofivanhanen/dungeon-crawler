@@ -12,12 +12,17 @@ namespace BehaviourControllers
 
         private readonly Color _normalColor;
         private readonly Color _hurtingColor;
-
-        public int Health;
-        public bool Dead;
-
         private readonly float _damageTakingTimerMax;
         private float _timeSinceLastHit;
+
+        /// <summary>
+        /// Current health of the object
+        /// </summary>
+        public int Health;
+        /// <summary>
+        /// Indicator of current aliveness
+        /// </summary>
+        public bool Dead;
 
         /// <summary>
         /// Constructor
@@ -49,7 +54,6 @@ namespace BehaviourControllers
         {
             if (Dead) return false;
 
-            // TODO: This timer might end up being redundant
             if (useTimer)
             {
                 if (_timeSinceLastHit < _damageTakingTimerMax)
@@ -85,8 +89,5 @@ namespace BehaviourControllers
                 _objectWithHealth.ChangeColor(_normalColor);
             }
         }
-
-        // TODO: Regenerating health
-        // TODO: Increasing max health
     }
 }

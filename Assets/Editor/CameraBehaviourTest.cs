@@ -12,7 +12,7 @@ namespace Editor
         public void CalculatePositionIsDifferentFromOriginal()
         {
             CameraMovementBehaviourController movement =
-                new CameraMovementBehaviourController {Offset = new Vector3(0, 10, 0), Interpolation = 0.5f};
+                new CameraMovementBehaviourController(new Vector3(0, 10, 0),0.5f);
             Vector3 currentPosition = new Vector3(10, 11, 5);
             Vector3 playerPosition = new Vector3(11, 1, 4);
             float deltaTime = 0.01f;
@@ -27,7 +27,7 @@ namespace Editor
         public void CalculatePositionGoesInCorrectDirection()
         {
             CameraMovementBehaviourController movement =
-                new CameraMovementBehaviourController {Offset = new Vector3(0, 10, 0), Interpolation = 0.5f};
+                new CameraMovementBehaviourController(new Vector3(0, 10, 0), 0.5f);
             Vector3 currentPosition = new Vector3(0, 11, 0);
             Vector3 playerPosition = new Vector3(0, 1, 2);
             float deltaTime = 0.01f;
@@ -42,7 +42,7 @@ namespace Editor
         public void CalculatePositionNotTooFast()
         {
             CameraMovementBehaviourController movement =
-                new CameraMovementBehaviourController {Offset = new Vector3(0, 10, 0), Interpolation = 0.5f};
+                new CameraMovementBehaviourController(new Vector3(0, 10, 0), 0.5f);
             Vector3 currentPosition = new Vector3(0, 11, 0);
             Vector3 playerPosition = new Vector3(0, 1, 2);
             float deltaTime = 0.01f;

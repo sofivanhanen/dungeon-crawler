@@ -4,30 +4,46 @@ using Random = System.Random;
 
 namespace LevelGeneration
 {
+    /// <summary>
+    /// Generates randomized levels
+    /// </summary>
     public class LevelGenerator
     {
+        // Directions
         private const int South = 0;
         private const int West = 1;
         private const int North = 2;
         private const int East = 3;
 
+        // Number codes of types of rooms
         private const int Dead = 10;
         private const int Corridor = 11;
         private const int Corner = 12;
         private const int ThreeWay = 13;
         private const int FourWay = 14;
 
+        // Changeable values
         private int _edgeSize;
         private int _difficulty;
         private bool _hasEnd;
         private Room[,] _level;
         private readonly Random _random;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public LevelGenerator()
         {
             _random = new Random();
         }
 
+        /// <summary>
+        /// Generates a complete level, as a two-dimensional array
+        /// </summary>
+        /// <param name="edgeSize">Max size of the edges of the level</param>
+        /// <param name="difficulty">Used in generating enemies, 1 is easiest, 5 is quite hard</param>
+        /// <returns>A two-dimensional array of Room objects</returns>
+        /// <exception cref="Exception">When trying to generate a level with edge size smaller than 3</exception>
         public Room[,] GenerateLevel(int edgeSize, int difficulty)
         {
             // Setup

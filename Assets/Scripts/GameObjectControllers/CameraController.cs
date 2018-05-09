@@ -12,15 +12,12 @@ namespace GameObjectControllers
         /// The Player GameObject (set in inspector)
         /// </summary>
         public GameObject Player;
+        
         private CameraMovementBehaviourController _movement;
 
         private void Start()
         {
-            _movement = new CameraMovementBehaviourController
-            {
-                Interpolation = 5.0f,
-                Offset = transform.position - Player.transform.position
-            };
+            _movement = new CameraMovementBehaviourController(transform.position - Player.transform.position, 5.0f);
         }
 
         private void OnEnable()
