@@ -9,12 +9,11 @@ namespace GameObjectControllers
     /// </summary>
     public class GhostController : MonoBehaviour, IObjectWithHealth, IEnemyFollowing
     {
-        private const float MinTimeBetweenAttacks = 1f;
-        private float _attackTimer;
-        private const int Damage = 30;
+        private const int Damage = 25;
 
         private HealthAndDyingBehaviourController _healthAndDying;
         private EnemyMovementBehaviourController _movement;
+        private EnemyAttackBehaviourController _attacking;
 
         /// <summary>
         /// The Player GameObject
@@ -26,29 +25,27 @@ namespace GameObjectControllers
             _healthAndDying = new HealthAndDyingBehaviourController(this, new Color(1f, 1f, 1f, 0.5f),
                 new Color(1f, 0.8f, 0.8f, 0.5f), 40, 0.3f);
             _movement = new EnemyMovementBehaviourController(this, 5, 1.0f, 0.15f);
+            _attacking = new EnemyAttackBehaviourController(1f);
             Player = GameObject.FindWithTag("Player");
-            _attackTimer = MinTimeBetweenAttacks;
         }
 
         private void Update()
         {
-            _attackTimer += Time.deltaTime;
             _healthAndDying.Update(Time.deltaTime);
             // No check for death here since if we died, we should be destroyed by now
             _movement.Update(transform.position, transform.rotation, Player.transform.position, Time.deltaTime);
+            _attacking.Update(Time.deltaTime);
         }
 
         private void OnCollisionStay(Collision collision)
         {
-            // TODO: Attack controller for ghost
-            if (collision.gameObject.CompareTag("Player") && _attackTimer >= MinTimeBetweenAttacks)
+            if (collision.gameObject.CompareTag("Player") && _attacking.CanAttack())
             {
                 Player.GetComponent<PlayerController>().GetHit(Damage);
-                _attackTimer = 0;
             }
         }
         
-        // Health and dying:
+        // Health and dying
 
         /// <summary>
         /// Called from other GameObjects hitting this object (namely, the player's sword)
@@ -71,7 +68,7 @@ namespace GameObjectControllers
             Destroy(gameObject);
         }
         
-        // Movement:
+        // Movement
 
         /// <inheritdoc />
         public void Move(Vector3 movement)
