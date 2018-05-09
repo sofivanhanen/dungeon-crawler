@@ -7,20 +7,45 @@ namespace LevelGeneration.Rooms
     /// </summary>
     public class Room
     {
-        // All rooms need to know their location, orientation and shape.
-        // Rooms also keep track of the enemies, whether they're the beginning or end of a level,
-        // and whether their southern or western wall clips with another room.
-        
-        // X and Z as their index in a two-dimensional array, not as Unity distance values.
+        /// <summary>
+        /// X position in a two-dimensional array
+        /// </summary>
         public readonly int X;
+
+        /// <summary>
+        /// Z position in a two-dimensional array
+        /// </summary>
         public readonly int Z;
-        // Orientation is saved as int, 0-3, corresponding to directions defined in LevelGenerator as constants.
-        // 0 means default (south), 1 means to west (turned 90 degrees), and so on.
+
+        /// <summary>
+        /// Orientation as int between 0-3. 0 means default (south), 1 means west (turned 90 degrees) and so on.
+        /// </summary>
         public readonly int Orientation;
+
+        /// <summary>
+        /// Amount of enemies in this room
+        /// </summary>
         public int Enemies;
+
+        /// <summary>
+        /// Whether this room is the beginning of the level. Currently level always starts with a 4-way intersection.
+        /// </summary>
         public bool Beginning;
+
+        /// <summary>
+        /// Whether this room is the 'end' of the level, so whether is has a ladder or not.
+        /// Currently only dead end rooms are eligible to hold ladders.
+        /// </summary>
         public bool End;
+
+        /// <summary>
+        /// Whether there is a room to south of this room, so whether the southern wall needs to be hidden on generation.
+        /// </summary>
         public bool HideSouthernWall;
+
+        /// <summary>
+        /// Whether there is a room to west of this room, so whether the western wall needs to be hidden on generation.
+        /// </summary>
         public bool HideWesternWall;
 
         protected Room(int x, int z, int orientation)
