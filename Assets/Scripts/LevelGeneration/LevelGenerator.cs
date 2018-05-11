@@ -28,6 +28,9 @@ namespace LevelGeneration
         private bool _hasEnd;
         private Room[,] _level;
         private readonly Random _random;
+        
+        // Debug
+        private readonly int _seed;
 
         /// <summary>
         /// Constructor
@@ -35,13 +38,24 @@ namespace LevelGeneration
         public LevelGenerator()
         {
             _random = new Random();
+            _seed = -1;
+        }
+
+        /// <summary>
+        /// Debug constructor
+        /// </summary>
+        /// <param name="seed">Seed for Random</param>
+        public LevelGenerator(int seed)
+        {
+            _random = new Random(seed);
+            _seed = seed;
         }
 
         /// <summary>
         /// Generates a complete level, as a two-dimensional array
         /// </summary>
-        /// <param name="edgeSize">Max size of the edges of the level</param>
-        /// <param name="difficulty">Used in generating enemies, 1 is easiest, 5 is quite hard</param>
+        /// <param name="edgeSize">Max size of the edges of the level. Set -1 to have size determined by difficulty</param>
+        /// <param name="difficulty">Used in generating enemies and size of the level (if edgeSize was -1). 1 is easiest</param>
         /// <returns>A two-dimensional array of Room objects</returns>
         /// <exception cref="Exception">When trying to generate a level with edge size smaller than 3</exception>
         public Room[,] GenerateLevel(int edgeSize, int difficulty)
