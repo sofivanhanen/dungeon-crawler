@@ -32,4 +32,10 @@
 ||1|Vihollisten generointi
 ||1|Tikapuut / tasoilla eteneminen
 ||3|Dokumentaatiota, uudet buildit ja uusi release
-||**54.5**|
+|8.5.|2|UI, Pause- ja game over -screenit
+||1|Uusia tekstuureja
+||1|Glitchien korjauksia
+|9.5.|3|Testien kirjoittamista ja refaktorointia
+||1.5|xml-dokumentaatio-kommenttien kirjoittamista
+|11.5.|4|Dokumentaatiota, uudet buildit ja uusi release
+||**67**|
