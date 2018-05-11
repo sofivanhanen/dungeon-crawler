@@ -28,18 +28,18 @@ Pelit Fate (WildTangent, 2005) ja Diablo III (Blizzard Entertainment, 2012) oliv
 - Lisää erilaisia vihollisia
 - Pelaajalle näkyvä tason minimap, joka laajenee sitä mukaa kuin pelaaja tutkii tasoa
 - Loot system
- - Hirviöt pudottavat kuollessaan kultaa, aseita ja varusteita
- - Pelaaja voi käyttää aseita ja varusteita, joita pelin aikana löytää
-   - Erilaiset aseet toimivat eri tavalla: Ranged aseet, dual wield yms.
- - Tietyiltä tasoilta löytyy myyntimies, jolle pelaaja voi myyydä tarpeettomat esineet, ja jolta voi ostaa esim. taikajuomia
+  - Hirviöt pudottavat kuollessaan kultaa, aseita ja varusteita
+  - Pelaaja voi käyttää aseita ja varusteita, joita pelin aikana löytää
+    - Erilaiset aseet toimivat eri tavalla: Ranged aseet, dual wield yms.
+  - Tietyiltä tasoilta löytyy myyntimies, jolle pelaaja voi myyydä tarpeettomat esineet, ja jolta voi ostaa esim. taikajuomia
 - Leveling system
- - Pelaaja kerää kokemusta (experience points)
- - Tarpeeksi pisteitä saatuaan pelihahmo saavuttaa uuden kokemustason jolloin hahmon attribuutit paranevat
-   - Attribuutteja esimerkiksi liikkumisen nopeus, hyökkäysnopeus, hyökkäyksen voimakkuus ja pelihahmon hallitseman valaistuksen voimakkuus
- - Uudella tasolla pelaaja saa käyttöönsä pisteitä, joilla pelaaja voi itse kehittää hahmoaan attribuutteja parantamalla tai esim. uusilla loitsuilla
+  - Pelaaja kerää kokemusta (experience points)
+  - Tarpeeksi pisteitä saatuaan pelihahmo saavuttaa uuden kokemustason jolloin hahmon attribuutit paranevat
+    - Attribuutteja esimerkiksi liikkumisen nopeus, hyökkäysnopeus, hyökkäyksen voimakkuus ja pelihahmon hallitseman valaistuksen voimakkuus
+  - Uudella tasolla pelaaja saa käyttöönsä pisteitä, joilla pelaaja voi itse kehittää hahmoaan attribuutteja parantamalla tai esim. uusilla loitsuilla
 - Loitsut
- - Pelaaja voi käyttää regeneroituvaa resurssia, manaa, loitsimiseen
- - Taisteluloitsuja, parantamisloitsu, teleport-loitsu, yms.
+  - Pelaaja voi käyttää regeneroituvaa resurssia, manaa, loitsimiseen
+  - Taisteluloitsuja, parantamisloitsu, teleport-loitsu, yms.
 - Checkpoints
- - Pelaaja pääsee tallentamaan oman edistymisensä, ja kuoleman sattuessa pääsee jatkamaan tietystä pisteestä
+  - Pelaaja pääsee tallentamaan oman edistymisensä, ja kuoleman sattuessa pääsee jatkamaan tietystä pisteestä
 - End game scenario
