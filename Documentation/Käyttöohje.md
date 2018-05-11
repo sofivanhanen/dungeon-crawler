@@ -2,23 +2,36 @@
 
 ## Ohjelman käynnistäminen
 
+### Releasesta
+
 Lataa viimeisin omalle käyttöjärjestelmällesi sopiva release ja pura .zip-tiedosto.
 Suorita kansion sisältämä suoritettava tiedosto
 (Windowsilla .exe, Linuxilla .x86, Macilla .app tms.)
 Peli käynnistyy automaattisesti.
 
+### Lähdekoodista
+
+Kloonaa repo ja avaa sovellus Unityssa.
+Voit pelata peliä Unityn sisällä painamalla Play-nappia, tai voit valita File - Build And Run.
+
 ## Pelaaminen
 
-Liiku nuoli- tai WASD-näppäimillä.
-Poistu pelistä esc-näppäimellä.
-Heiluta miekkaa klikkaamalla hiirtä.
-Tapa vihollisia miekallasi.
+### Tavoite
 
-Tavoitteesi on löytää tikapuut, joiden avulla pääset syvemmälle.
-Mitä pitemmälle pääset, sitä suurempia ja vaarallisempia tasot ovat.
+Tavoitteesi on tutkia luolastoa.
+Jos löydät tikapuut, pääset etenemään syvemmälle.
+Tapa kummituksia miekallasi ja vältä kuolemista mahdollisimman pitkään.
 
-Jos vihollinen koskee hahmoosi, vahingoitut.
-Jos vahingoitut liikaa, kuolet.
-Kun olet kuollut, et pysty enää jatkamaan peliä.
+### Ohjaimet
+
+Liikkuminen: Nuoli- tai WASD-näppäimet
+
+Miekan heilauttaminen: Hiiren painike
+
+Pelin keskeyttäminen (pause): P
+
+Pelaa uudestaan (Game Over-screenissä): R
+
+Sulje peli: ESC
 
 **Onnea matkaan!**
